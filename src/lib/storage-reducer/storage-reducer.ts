@@ -1,4 +1,4 @@
-import { format_time } from "../format_timestamp/format_timestamp";
+import { format_time } from "../format-timestamp/format-timestamp";
 
 const storageReducer = (
   state: StorageReducerState,

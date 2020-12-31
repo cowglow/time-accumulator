@@ -1,5 +1,5 @@
 import storageReducer from "./storage-reducer";
-import { format_time } from "../format_timestamp/format_timestamp";
+import { format_time } from "../format-timestamp/format-timestamp";
 
 describe("storage-reducer", () => {
   it("test function", () => {
