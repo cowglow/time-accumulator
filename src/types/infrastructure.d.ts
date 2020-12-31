@@ -1,0 +1,1 @@
+type FormatTimeOutput = any;
