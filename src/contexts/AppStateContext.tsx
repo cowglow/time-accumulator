@@ -3,11 +3,13 @@ import moment from "moment";
 
 /** Context */
 export interface AppStateContextProps {
+  log: string[];
   timestamp: null | string;
   actionToggle: () => void;
 }
 
 const defaultValues: AppStateContextProps = {
+  log: [],
   timestamp: null,
   actionToggle: () => {
     throw Error("Error: Uninitialized context");
@@ -26,21 +28,24 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
   children,
   defaultValue,
 }) => {
+  const [timeLog, setTimeLog] = useState(defaultValue ? defaultValue.log : []);
   const [checkin, setCheckin] = useState<string | null>(
     defaultValue ? defaultValue.timestamp : null
   );
 
   const toggle = () => {
+    const timestamp = moment().unix().toString();
     if (!checkin) {
-      setCheckin(moment().unix().toString());
+      setCheckin(timestamp);
     } else {
+      setTimeLog([...timeLog, timestamp]);
       setCheckin(null);
     }
   };
 
   return (
     <AppStateContext.Provider
-      value={{ timestamp: checkin, actionToggle: toggle }}
+      value={{ actionToggle: toggle, log: timeLog, timestamp: checkin }}
     >
       {children}
     </AppStateContext.Provider>
