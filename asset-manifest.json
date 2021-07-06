@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/time-accumulator/static/css/main.0c8b0166.chunk.css",
+    "main.js": "/time-accumulator/static/js/main.89b7674e.chunk.js",
+    "main.js.map": "/time-accumulator/static/js/main.89b7674e.chunk.js.map",
+    "runtime-main.js": "/time-accumulator/static/js/runtime-main.616cb3c3.js",
+    "runtime-main.js.map": "/time-accumulator/static/js/runtime-main.616cb3c3.js.map",
+    "static/js/2.267cdbe1.chunk.js": "/time-accumulator/static/js/2.267cdbe1.chunk.js",
+    "static/js/2.267cdbe1.chunk.js.map": "/time-accumulator/static/js/2.267cdbe1.chunk.js.map",
+    "static/js/3.327d9427.chunk.js": "/time-accumulator/static/js/3.327d9427.chunk.js",
+    "static/js/3.327d9427.chunk.js.map": "/time-accumulator/static/js/3.327d9427.chunk.js.map",
+    "index.html": "/time-accumulator/index.html",
+    "static/css/main.0c8b0166.chunk.css.map": "/time-accumulator/static/css/main.0c8b0166.chunk.css.map",
+    "static/js/2.267cdbe1.chunk.js.LICENSE.txt": "/time-accumulator/static/js/2.267cdbe1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.616cb3c3.js",
+    "static/js/2.267cdbe1.chunk.js",
+    "static/css/main.0c8b0166.chunk.css",
+    "static/js/main.89b7674e.chunk.js"
+  ]
+}
