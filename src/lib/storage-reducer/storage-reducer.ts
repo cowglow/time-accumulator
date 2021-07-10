@@ -1,4 +1,4 @@
-import { format_time } from "../format-timestamp/format-timestamp";
+import { formatTimestamp } from "../format-timestamp/format-timestamp";
 
 const storageReducer = (
   state: StorageReducerState,
@@ -12,7 +12,7 @@ const storageReducer = (
         ...state,
         {
           comment: action.payload,
-          start: format_time(timestamp),
+          start: formatTimestamp(timestamp),
         },
       ];
 

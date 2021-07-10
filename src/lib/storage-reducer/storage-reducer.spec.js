@@ -1,5 +1,5 @@
 import storageReducer from "./storage-reducer";
-import { format_time } from "../format-timestamp/format-timestamp";
+import { formatTimestamp } from "../format-timestamp/format-timestamp";
 
 describe("storage-reducer", () => {
   it("test function", () => {
@@ -11,7 +11,7 @@ describe("storage-reducer", () => {
     expect(foo).toEqual([
       {
         comment: "working on it",
-        start: format_time(new Date().getTime()),
+        start: formatTimestamp(new Date().getTime()),
       },
     ]);
   });
