@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import moment from "moment";
+import React, { useState } from 'react';
+import moment from 'moment';
+
+type LogType = {
+  timeIn: string;
+  timeOut: string;
+};
 
 /** Context */
 export interface AppStateContextProps {
-  log: string[];
+  log: LogType[];
   timestamp: null | string;
   actionToggle: () => void;
 }
@@ -12,7 +17,7 @@ const defaultValues: AppStateContextProps = {
   log: [],
   timestamp: null,
   actionToggle: () => {
-    throw Error("Error: Uninitialized context");
+    throw Error('Error: Uninitialized context');
   },
 };
 
@@ -24,21 +29,28 @@ interface AppStateProviderProps {
   children: React.ReactNode;
   defaultValue?: AppStateContextProps;
 }
+
 export const AppStateProvider: React.FC<AppStateProviderProps> = ({
   children,
   defaultValue,
 }) => {
-  const [timeLog, setTimeLog] = useState(defaultValue ? defaultValue.log : []);
+  const [timeLog, setTimeLog] = useState<LogType[]>([]);
   const [checkin, setCheckin] = useState<string | null>(
     defaultValue ? defaultValue.timestamp : null
   );
 
   const toggle = () => {
-    const timestamp = moment().unix().toString();
+    const timestamp = moment().unix();
     if (!checkin) {
-      setCheckin(timestamp);
+      setCheckin(timestamp.toString());
     } else {
-      setTimeLog([...timeLog, timestamp]);
+      setTimeLog([
+        ...timeLog,
+        {
+          timeIn: checkin,
+          timeOut: timestamp.toString(),
+        },
+      ]);
       setCheckin(null);
     }
   };
