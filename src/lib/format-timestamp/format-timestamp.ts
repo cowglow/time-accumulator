@@ -10,7 +10,7 @@ export function formatLog(start: number, end: number) {
 
   const hours = Math.floor(diff / 1000 / 60 / 60) % 24;
   const minutes = Math.floor(diff / 1000 / 60) % 60;
-  const seconds = Math.floor((diff / 1000) % 60);
+  const seconds = Math.floor(diff / 1000) % 60;
 
   return (
     hours.toString().padStart(2, '0') +
