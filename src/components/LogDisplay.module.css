@@ -1,0 +1,47 @@
+.root {
+  width: 100%;
+  font-family: var(--primary-font-family);
+}
+
+ol {
+  color: var(--text-color);
+  font-size: calc(50vw / 10);
+  text-shadow: 1px 1px #000;
+  letter-spacing: normal;
+  max-height: calc(38vh);
+  overflow-y: scroll;
+}
+.gradient {
+  content: '';
+  top: 0;
+  left: 0;
+  height: 20px;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--secondary-color) 0%,
+    var(--primary-color) 100%
+  );
+  border-radius: var(--radius);
+}
+
+.log {
+  border: thin solid white;
+  margin: var(--margin);
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius);
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  word-spacing: 0.2rem;
+}
+
+@media screen and (min-width: 800px) {
+  .log {
+    border: thin solid red;
+    padding: 0.5rem;
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+    word-spacing: 1rem;
+  }
+}

@@ -1,0 +1,39 @@
+.root {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background: var(--primary-color);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 153, 0, 1) 33%,
+    rgba(255, 244, 0, 1) 66%,
+    rgba(255, 244, 0, 1) 100%
+  );
+}
+
+header {
+  margin: var(--margin);
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+main {
+  margin: var(--margin);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media screen and (min-width: 800px) {
+  header,
+  main {
+    width: 800px;
+    margin: 0 auto;
+  }
+}

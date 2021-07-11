@@ -5,7 +5,7 @@ import {
   ERROR_UNINITIALIZED_CONTEXT,
   LOCALSTORAGE_CHECKIN_KEY,
   LOCALSTORAGE_LOG_KEY,
-} from '../constants';
+} from '../lib/constants';
 
 type LogType = {
   timeIn: string;

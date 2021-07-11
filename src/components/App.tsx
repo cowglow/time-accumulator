@@ -1,18 +1,19 @@
 import React from 'react';
 import { ClockDisplay } from './ClockDisplay';
 import { LogDisplay } from './LogDisplay';
-import { useAppState } from '../contexts/AppStateContext';
+import { ActionController } from './ActionController';
+import styles from './App.module.css';
 
 export const App = () => {
-  const { actionToggle, timestamp, resetLog } = useAppState();
   return (
-    <div>
-      <header>time-accumulator</header>
-      <main>
-        <ClockDisplay />
+    <div className={styles.root}>
+      <header>
         <LogDisplay />
-        <button onClick={actionToggle}>{!timestamp ? 'Start' : 'Stop'}</button>
-        <button onClick={resetLog}>Reset Log</button>
+      </header>
+      <main>
+        <ActionController>
+          <ClockDisplay />
+        </ActionController>
       </main>
     </div>
   );
