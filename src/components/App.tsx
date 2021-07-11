@@ -15,6 +15,9 @@ export const App = () => {
           <ClockDisplay />
         </ActionController>
       </main>
+       <footer>
+        <a href="https://github.com/cowglow/time-accumulator">GitHub Repo.</a>
+      </footer>
     </div>
   );
 };

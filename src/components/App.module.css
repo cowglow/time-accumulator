@@ -29,6 +29,9 @@ main {
   justify-content: flex-end;
   align-items: center;
 }
+footer {
+  margin: var(--margin) auto;
+}
 
 @media screen and (min-width: 800px) {
   header,
@@ -36,4 +39,15 @@ main {
     width: 800px;
     margin: 0 auto;
   }
+}
+
+a {
+  font-family: sans-serif;
+  letter-spacing: 0.05rem;
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: red;
 }
