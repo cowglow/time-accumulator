@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import {
+  ERROR_UNINITIALIZED_CONTEXT,
+  LOCALSTORAGE_CHECKIN_KEY,
+  LOCALSTORAGE_LOG_KEY,
+} from '../constants';
 
 type LogType = {
   timeIn: string;
@@ -9,15 +15,19 @@ type LogType = {
 /** Context */
 export interface AppStateContextProps {
   log: LogType[];
-  timestamp: null | string;
+  timestamp: false | string;
   actionToggle: () => void;
+  resetLog: () => void;
 }
 
 const defaultValues: AppStateContextProps = {
   log: [],
-  timestamp: null,
+  timestamp: false,
   actionToggle: () => {
-    throw Error('Error: Uninitialized context');
+    throw Error(ERROR_UNINITIALIZED_CONTEXT);
+  },
+  resetLog: () => {
+    throw Error(ERROR_UNINITIALIZED_CONTEXT);
   },
 };
 
@@ -34,10 +44,13 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
   children,
   defaultValue,
 }) => {
-  const [timeLog, setTimeLog] = useState<LogType[]>([]);
-  const [checkin, setCheckin] = useState<string | null>(
-    defaultValue ? defaultValue.timestamp : null
+  const defaultCheckin = defaultValue ? defaultValue.timestamp : false;
+  const [checkin, setCheckin] = useLocalStorage(
+    LOCALSTORAGE_CHECKIN_KEY,
+    defaultCheckin
   );
+
+  const [timeLog, setTimeLog] = useLocalStorage(LOCALSTORAGE_LOG_KEY, []);
 
   const toggle = () => {
     const timestamp = moment().unix();
@@ -51,13 +64,21 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
           timeOut: timestamp.toString(),
         },
       ]);
-      setCheckin(null);
+      setCheckin(false);
     }
   };
 
+  const resetLog = () => {
+    setTimeLog([]);
+  };
   return (
     <AppStateContext.Provider
-      value={{ actionToggle: toggle, log: timeLog, timestamp: checkin }}
+      value={{
+        actionToggle: toggle,
+        log: timeLog,
+        timestamp: checkin,
+        resetLog,
+      }}
     >
       {children}
     </AppStateContext.Provider>
