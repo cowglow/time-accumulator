@@ -1,11 +1,19 @@
-@import 'fonts/bootstrap.css';
-@import 'reset.css';
+@import 'styles.base.css';
 
-:root {
-  --text-color: white;
-  --margin: 1.35rem;
-  --radius: 15px;
-  --primary-font-family: 'bd_flukeregular', sans-serif;
-  --primary-color: rgba(255, 153, 0, 1);
-  --secondary-color: rgba(255, 244, 0, 1);
+#root {
+  background: #666;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+#root a {
+  font-family: sans-serif;
+  color: white;
+}
+#root a:hover {
+  color: red;
 }
