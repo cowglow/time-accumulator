@@ -1,6 +1,6 @@
-import React from "react";
-import { useAppState } from "../contexts/AppStateContext";
-import styles from "./ActionController.module.css";
+import React from 'react';
+import { useAppState } from '../contexts/AppStateContext';
+import Button from 'react-bootstrap/Button';
 
 interface ActionControllerProps {
   children: React.ReactNode;
@@ -10,8 +10,10 @@ export const ActionController: React.FC<ActionControllerProps> = ({
 }) => {
   const { actionToggle, timestamp, resetLog } = useAppState();
   return (
-    <div className={styles.root}>
-      <button onClick={resetLog}>Reset Log</button>
+    <div>
+      <Button variant="secondary" onClick={resetLog}>
+        Reset Log
+      </Button>
       {children}
       <button onClick={actionToggle}>{!timestamp ? 'Start' : 'Stop'}</button>
     </div>

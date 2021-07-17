@@ -1,24 +1,29 @@
 import React from 'react';
-import { ClockDisplay } from './ClockDisplay';
-import { LogDisplay } from './LogDisplay';
 import { ActionController } from './ActionController';
-import styles from './App.module.css';
+import { ClockDisplay } from './ClockDisplay';
+import { Col, Container, Row } from 'react-bootstrap';
+
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { LogDisplay } from './LogDisplay';
 
 export const App = () => {
   return (
-    <div className={styles.root}>
-      <header>
-        <LogDisplay />
-      </header>
-      <main>
-        <ActionController>
-          <ClockDisplay />
-        </ActionController>
-      </main>
-       <footer>
-        <a href="https://github.com/cowglow/time-accumulator">GitHub Repo.</a>
-      </footer>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <ActionController>
+            <LogDisplay />
+            <ClockDisplay />
+          </ActionController>
+          <footer>
+            <a href="https://github.com/cowglow/time-accumulator">
+              GitHub Repo.
+            </a>
+          </footer>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
