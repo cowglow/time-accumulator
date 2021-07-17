@@ -10,12 +10,18 @@ export const ActionController: React.FC<ActionControllerProps> = ({
 }) => {
   const { actionToggle, timestamp, resetLog } = useAppState();
   return (
-    <div>
+    <div className="d-grid gap-2">
       <Button variant="secondary" onClick={resetLog}>
         Reset Log
       </Button>
       {children}
-      <button onClick={actionToggle}>{!timestamp ? 'Start' : 'Stop'}</button>
+      <Button
+        variant={!timestamp ? 'success' : 'danger'}
+        size="lg"
+        onClick={actionToggle}
+      >
+        {!timestamp ? 'Start' : 'Stop'}
+      </Button>
     </div>
   );
 };
