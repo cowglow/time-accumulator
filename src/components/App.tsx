@@ -1,29 +1,30 @@
 import React from 'react';
 import { ActionController } from './ActionController';
 import { ClockDisplay } from './ClockDisplay';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Drawer } from './Drawer';
+import Container from 'react-bootstrap/Container';
 
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { LogDisplay } from './LogDisplay';
 
 export const App = () => {
   return (
-    <Container>
-      <Row>
-        <Col>
-          <ActionController>
-            <LogDisplay />
-            <ClockDisplay />
-          </ActionController>
-          <footer>
-            <a href="https://github.com/cowglow/time-accumulator">
-              GitHub Repo.
-            </a>
-          </footer>
-        </Col>
-      </Row>
-    </Container>
+    <div id="app">
+      <Container
+        className="gap-5"
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignContent: 'space-between',
+        }}
+      >
+        <ClockDisplay />
+        <ActionController />
+      </Container>
+      <Drawer />
+    </div>
   );
 };
 

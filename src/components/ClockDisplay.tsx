@@ -9,12 +9,10 @@ export const ClockDisplay: React.FunctionComponent<ClockDisplayProps> = () => {
 
   return (
     <Card>
-      <Card.Body>
-        <h1 className="display-1">
-          <span>{hour.toString().padStart(2, '0')}</span>:
-          <span>{minute.toString().padStart(2, '0')}</span>:
-          <span>{seconds.toString().padStart(2, '0')}</span>
-        </h1>
+      <Card.Body className="display-1 ">
+        <span>{hour.toString().padStart(2, '0')}</span>:
+        <span>{minute.toString().padStart(2, '0')}</span>:
+        <span>{seconds.toString().padStart(2, '0')}</span>
       </Card.Body>
     </Card>
   );

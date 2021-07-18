@@ -1,19 +1,36 @@
 @import 'styles.base.css';
 
+:root {
+  --background: #333;
+  --text-color: #000;
+
+  --cell-padding: auto 1.87rem;
+
+  --console-log: thick solid #f00;
+}
+
 #root {
-  background: #666;
+  /*border: var(--console-log);*/
+  background: var(--background);
+  color: var(--text-color);
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-content: center;
   align-items: center;
+  padding: var(--cell-padding);
 }
 
-#root a {
+#root a,
+#root a:visited {
   font-family: sans-serif;
   color: white;
 }
 #root a:hover {
   color: red;
+}
+
+#app {
+  flex-grow: 1;
 }
