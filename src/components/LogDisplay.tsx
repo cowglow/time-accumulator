@@ -6,7 +6,13 @@ import './LogDisplay.css';
 interface LogDisplayProps {}
 
 export const LogDisplay: React.FC<LogDisplayProps> = () => {
-  const { log } = useAppState();
+  const { log, resetLog } = useAppState();
+
+  const clearHandler = () => {
+    if (window.confirm(`Clear all ${log.length} logged entries?`)) {
+      resetLog();
+    }
+  };
 
   return (
     <div className="log">
@@ -19,16 +25,25 @@ export const LogDisplay: React.FC<LogDisplayProps> = () => {
       {log.length === 0 ? (
         <p className="log__empty">NO ENTRIES RECORDED</p>
       ) : (
-        <ol className="log__list">
-          {log
-            .slice()
-            .reverse()
-            .map((entry, key) => (
-              <li className="log__entry" key={key}>
-                {formatLog(parseInt(entry.timeIn), parseInt(entry.timeOut))}
-              </li>
-            ))}
-        </ol>
+        <>
+          <ol className="log__list">
+            {log
+              .slice()
+              .reverse()
+              .map((entry, key) => (
+                <li className="log__entry" key={key}>
+                  {formatLog(parseInt(entry.timeIn), parseInt(entry.timeOut))}
+                </li>
+              ))}
+          </ol>
+          <button
+            type="button"
+            className="log__clear"
+            onClick={clearHandler}
+          >
+            Clear all
+          </button>
+        </>
       )}
     </div>
   );
