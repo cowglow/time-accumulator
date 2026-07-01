@@ -1,28 +1,34 @@
 import React from 'react';
 import { ActionController } from './ActionController';
-import { ClockDisplay } from './ClockDisplay';
+import { LogDisplay } from './LogDisplay';
 import { Drawer } from './Drawer';
-import Container from 'react-bootstrap/Container';
-
-// Importing the Bootstrap CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { StagesEnum, useAppStage } from '../contexts/AppStageContext';
+import './App.css';
 
 export const App = () => {
+  const { currentStage } = useAppStage();
+  const isLogStage = currentStage === StagesEnum.LogStage;
+
   return (
     <div id="app">
-      <Container
-        className="gap-5"
-        style={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignContent: 'space-between',
-        }}
-      >
-        <ClockDisplay />
-        <ActionController />
-      </Container>
+      <div className="stage-stack">
+        <div
+          className={`stage-view stage-view--dial${
+            isLogStage ? ' stage-view--collapsed' : ''
+          }`}
+          inert={isLogStage}
+        >
+          <ActionController />
+        </div>
+        <div
+          className={`stage-view stage-view--log${
+            isLogStage ? ' stage-view--visible' : ''
+          }`}
+          inert={!isLogStage}
+        >
+          <LogDisplay />
+        </div>
+      </div>
       <Drawer />
     </div>
   );

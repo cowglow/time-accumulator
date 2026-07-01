@@ -1,0 +1,90 @@
+.dial {
+  position: relative;
+  width: min(78vw, 400px);
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dial:focus-visible {
+  outline: var(--border-bold) solid var(--color-text-bright);
+  outline-offset: var(--space-md);
+}
+
+.dial__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dial__ring-guide {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+
+.dial__tick {
+  stroke: var(--color-border-strong);
+  stroke-width: 1;
+}
+
+.dial__tick--major {
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5;
+}
+
+.dial__ring-arc {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 3;
+  stroke-linecap: butt;
+  transition:
+    stroke 150ms linear,
+    stroke-width 150ms linear;
+}
+
+.dial:hover .dial__ring-arc {
+  stroke: var(--color-text-muted);
+}
+
+.dial--running .dial__ring-arc {
+  stroke: var(--color-text-bright);
+  stroke-width: 5;
+}
+
+.dial__face {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.dial__status {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-muted);
+}
+
+.dial--running .dial__status {
+  color: var(--color-text-bright);
+}
+
+.dial--running .dial__status::before {
+  content: '\25CF  ';
+}
+
+.dial--stopped .dial__status::before {
+  content: '\25CB  ';
+}

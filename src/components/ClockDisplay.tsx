@@ -1,19 +1,33 @@
 import React from 'react';
 import { useTimer } from '../hooks/useTimer';
-import Card from 'react-bootstrap/Card';
+import './ClockDisplay.css';
 
 interface ClockDisplayProps {}
 
+const toTileDigits = (unit: number) => unit.toString().padStart(2, '0').split('');
+
 export const ClockDisplay: React.FunctionComponent<ClockDisplayProps> = () => {
   const { hour, minute, seconds } = useTimer();
+  const units = [hour, minute, seconds];
 
   return (
-    <Card>
-      <Card.Body className="display-1 ">
-        <span>{hour.toString().padStart(2, '0')}</span>:
-        <span>{minute.toString().padStart(2, '0')}</span>:
-        <span>{seconds.toString().padStart(2, '0')}</span>
-      </Card.Body>
-    </Card>
+    <span className="split-flap" role="timer" aria-live="off">
+      {units.map((unit, groupIndex) => (
+        <React.Fragment key={groupIndex}>
+          {groupIndex > 0 && (
+            <span className="split-flap__colon" aria-hidden="true">
+              :
+            </span>
+          )}
+          <span className="split-flap__group">
+            {toTileDigits(unit).map((digit, digitIndex) => (
+              <span className="split-flap__tile" key={digitIndex}>
+                {digit}
+              </span>
+            ))}
+          </span>
+        </React.Fragment>
+      ))}
+    </span>
   );
 };

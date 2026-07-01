@@ -1,0 +1,41 @@
+.stage-stack {
+  position: relative;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.stage-view {
+  grid-area: 1 / 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease;
+}
+
+/* the ring's default, resting position */
+.stage-view--dial {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* lifts and collapses up out of the way when the log is shown */
+.stage-view--dial.stage-view--collapsed {
+  transform: translateY(-72px) scale(0.7);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage-view--log {
+  transform: translateY(48px) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage-view--log.stage-view--visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
