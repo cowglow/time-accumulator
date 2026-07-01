@@ -16,6 +16,6 @@ describe('format-log', () => {
 
   it('takes a unix timestamp and returns formatted log string', () => {
     const foo = formatLog(start, end);
-    expect(foo).toEqual('Sun 7 03:15:00 11:11');
+    expect(foo).toEqual('Sun 7 03:15:00 11:00');
   });
 });

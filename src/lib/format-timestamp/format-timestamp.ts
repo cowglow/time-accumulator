@@ -25,8 +25,8 @@ export function formatLog(start: number, end: number) {
     ':' +
     seconds.toString().padStart(2, '0') +
     ' ' +
-    mEnd.getUTCHours() +
+    mEnd.getUTCHours().toString().padStart(2, '0') +
     ':' +
-    mEnd.getUTCHours()
+    mEnd.getUTCMinutes().toString().padStart(2, '0')
   );
 }
