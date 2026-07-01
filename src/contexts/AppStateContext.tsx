@@ -30,7 +30,7 @@ const defaultValues: AppStateContextProps = {
   },
 };
 
-const AppStateContext =
+export const AppStateContext =
   React.createContext<AppStateContextProps>(defaultValues);
 
 /** Provider */

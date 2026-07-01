@@ -118,9 +118,11 @@ How it works:
   initializer semantics (`moment().set(...)` only evaluates once, on
   mount) and reused as the "zeroed" `Duration`/`Moment` when stopped.
 - Return shape exposes `hour`/`minute`/`seconds` (all integers, no
-  padding) and a `milliseconds` field that is actually **tenths of a
-  second** (`Math.floor(ms * 0.1)`, range 0-9) — `milliseconds` is a
-  misleading name for what's really a decisecond digit. Note this field is
+  padding) and a `milliseconds` field that is actually **hundredths of a
+  second** (`Math.floor(ms * 0.1)` where `ms` ranges 0-999, so the result
+  ranges 0-99) — `milliseconds` is a misleading name for what's really a
+  centisecond value. Verified directly against the ported
+  `computeElapsed` unit tests added in Phase 1. Note this field is
   computed but **never consumed** by any component today.
 
 ### Edge cases actually handled

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { formatLog, formatTimestamp } from './format-timestamp';
 
 describe('format-timestamp', () => {
@@ -15,6 +16,6 @@ describe('format-log', () => {
 
   it('takes a unix timestamp and returns formatted log string', () => {
     const foo = formatLog(start, end);
-    expect(foo).toEqual('03:15:00');
+    expect(foo).toEqual('Sun 7 03:15:00 11:11');
   });
 });
