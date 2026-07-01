@@ -1,0 +1,47 @@
+.split-flap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.split-flap__group {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.split-flap__tile {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.85em;
+  padding-block: 0.08em;
+  background: var(--color-bg);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 0 0 var(--color-border);
+  color: var(--color-text-bright);
+  font-family: var(--font-mono);
+  font-size: var(--text-display);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* split-flap seam: the hinge line across the middle of each tile */
+.split-flap__tile::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--color-bg);
+  opacity: 0.6;
+}
+
+.split-flap__colon {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-display);
+  line-height: 1;
+  transform: translateY(-0.05em);
+}
