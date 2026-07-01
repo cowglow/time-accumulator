@@ -1,36 +1,110 @@
 @import 'styles.base.css';
 
+/*
+ * Design tokens — gray/tactical system.
+ * Fully achromatic: every color token is a step on the gray scale.
+ */
 :root {
-  --background: #333;
-  --text-color: #000;
+  /* Gray scale — 00 near-black, 80 near-white */
+  --c-gray-00: #0a0a0b;
+  --c-gray-10: #18181a;
+  --c-gray-20: #2a2a2d;
+  --c-gray-30: #424246;
+  --c-gray-40: #626266;
+  --c-gray-50: #87878c;
+  --c-gray-60: #ababaf;
+  --c-gray-70: #d2d2d4;
+  --c-gray-80: #f3f3f3;
 
-  --cell-padding: auto 1.87rem;
+  /* Semantic surface/text roles built from the scale */
+  --color-bg: var(--c-gray-00);
+  --color-bg-raised: var(--c-gray-10);
+  --color-surface: var(--c-gray-20);
+  --color-border: var(--c-gray-30);
+  --color-border-strong: var(--c-gray-50);
+  --color-text: var(--c-gray-70);
+  --color-text-muted: var(--c-gray-50);
+  --color-text-bright: var(--c-gray-80);
+  --color-accent-fill: var(--c-gray-70);
+  --color-accent-fill-text: var(--c-gray-00);
 
-  --console-log: thick solid #f00;
+  /* Spacing scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, 'SFMono-Regular',
+    Menlo, Consolas, monospace;
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 2rem;
+  --text-display: clamp(2.5rem, 10vw, 4.5rem);
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.2em;
+
+  /* Structure */
+  --border-hairline: 1px;
+  --border-bold: 2px;
+  --radius-sharp: 0;
+  --radius-sm: 2px;
+
+  --grid-line: var(--c-gray-10);
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      var(--grid-line) 0,
+      var(--grid-line) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--grid-line) 0,
+      var(--grid-line) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 #root {
-  /*border: var(--console-log);*/
-  background: var(--background);
-  color: var(--text-color);
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-content: center;
-  align-items: center;
-  padding: var(--cell-padding);
+  padding: var(--space-lg);
 }
 
 #root a,
 #root a:visited {
-  font-family: sans-serif;
-  color: white;
+  color: var(--color-text-muted);
+  text-decoration: none;
 }
+
 #root a:hover {
-  color: red;
+  color: var(--color-text-bright);
 }
 
 #app {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
