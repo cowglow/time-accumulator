@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import {
   ERROR_UNINITIALIZED_CONTEXT,
@@ -53,7 +52,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
   const [timeLog, setTimeLog] = useLocalStorage(LOCALSTORAGE_LOG_KEY, []);
 
   const toggle = () => {
-    const timestamp = moment().unix();
+    const timestamp = Math.floor(Date.now() / 1000);
     if (!checkin) {
       setCheckin(timestamp.toString());
     } else {

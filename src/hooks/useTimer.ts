@@ -1,34 +1,42 @@
-import moment, { Duration, Moment } from "moment";
-import { useEffect, useState } from "react";
-import { useAppState } from "../contexts/AppStateContext";
+import { useEffect, useState } from 'react';
+import { useAppState } from '../contexts/AppStateContext';
+
+type ElapsedTime = {
+  hour: number;
+  minute: number;
+  seconds: number;
+  milliseconds: number;
+};
+
+const ZERO_ELAPSED: ElapsedTime = {
+  hour: 0,
+  minute: 0,
+  seconds: 0,
+  milliseconds: 0,
+};
+
+const computeElapsed = (startUnixSeconds: number): ElapsedTime => {
+  const diff = Date.now() - startUnixSeconds * 1000;
+  return {
+    hour: Math.floor(diff / 3_600_000) % 24,
+    minute: Math.floor(diff / 60_000) % 60,
+    seconds: Math.floor(diff / 1_000) % 60,
+    milliseconds: Math.floor((diff % 1000) * 0.1),
+  };
+};
 
 export const useTimer = () => {
   const { timestamp } = useAppState();
-
-  const reset = moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-  const [clock] = useState<Moment | Duration>(reset);
-
-  const [timer, setTimer] = useState(clock);
+  const [timer, setTimer] = useState<ElapsedTime>(ZERO_ELAPSED);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (timestamp) {
-        setTimer(
-          moment.duration(moment().diff(moment.unix(parseInt(timestamp))))
-        );
-      } else {
-        setTimer(reset);
-      }
+      setTimer(timestamp ? computeElapsed(parseInt(timestamp, 10)) : ZERO_ELAPSED);
     }, 100);
     return () => {
       clearTimeout(timeout);
     };
   });
 
-  return {
-    hour: timer.hours(),
-    minute: timer.minutes(),
-    seconds: timer.seconds(),
-    milliseconds: Math.floor(timer.milliseconds() * 0.1),
-  };
+  return timer;
 };
