@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
-import { ReactComponent as Gear } from '../assets/gear.svg';
+import Gear from '../assets/gear.svg?react';
 
 interface DrawerProps {}
 
