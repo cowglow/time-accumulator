@@ -1,7 +1,7 @@
 import React from 'react';
 import { ERROR_UNINITIALIZED_CONTEXT } from '../lib/constants';
 
-enum StagesEnum {
+export enum StagesEnum {
   TimerStage = 0,
   LogStage = 1,
 }

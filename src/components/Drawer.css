@@ -84,6 +84,17 @@
   color: var(--color-text-bright);
 }
 
+.drawer-panel__button--active {
+  background: var(--color-accent-fill);
+  border-color: var(--color-accent-fill);
+  color: var(--color-accent-fill-text);
+}
+
+.drawer-panel__button--active:hover {
+  border-color: var(--color-accent-fill);
+  color: var(--color-accent-fill-text);
+}
+
 .drawer-panel__close {
   padding: var(--space-sm) var(--space-md);
   background: var(--color-accent-fill);
