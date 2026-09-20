@@ -59,12 +59,14 @@ article > * + * {
     margin-top: 1em;
 }
 
-/* Inherit fonts for inputs and buttons */
+/* Inherit fonts for inputs and buttons, and drop native OS chrome so
+   author styles (border-radius, background, border) are what render */
 input,
 button,
 textarea,
 select {
     font: inherit;
+    appearance: none;
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */

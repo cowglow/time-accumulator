@@ -1,0 +1,95 @@
+.timer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  padding: calc(var(--space-lg) + env(safe-area-inset-top, 0px)) var(--space-lg)
+    calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+}
+
+.timer-overlay__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.timer-overlay__rec {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.timer-overlay__dot {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--color-text-bright);
+  animation: timer-overlay-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes timer-overlay-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timer-overlay__dot {
+    animation: none;
+  }
+}
+
+.timer-overlay__minimize {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  background: none;
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sharp);
+  color: var(--color-text-muted);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+}
+
+.timer-overlay__minimize:hover {
+  border-color: var(--color-text-bright);
+  color: var(--color-text-bright);
+}
+
+.timer-overlay__mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+}
+
+.timer-overlay__stop {
+  flex-shrink: 0;
+  display: block;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-md);
+  background: var(--color-text-bright);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sharp);
+  cursor: pointer;
+}

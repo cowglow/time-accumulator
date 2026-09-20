@@ -1,0 +1,21 @@
+.activity-view {
+  width: min(92vw, 480px);
+  padding-bottom: var(--space-2xl);
+}
+
+.activity-view h1 {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-bright);
+  text-transform: uppercase;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+  margin: var(--space-lg) 0 var(--space-xs);
+}

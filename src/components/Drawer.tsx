@@ -33,14 +33,14 @@ export const Drawer: React.FC<DrawerProps> = () => {
           type="button"
           className="drawer-bar__toggle"
           onClick={toggleHandler}
-          aria-label="Open settings"
+          aria-label="Open navigation"
           aria-expanded={show}
         >
           <Gear />
         </button>
       </nav>
       {show && (
-        <div className="drawer-panel" role="dialog" aria-label="Settings">
+        <div className="drawer-panel" role="dialog" aria-label="Navigation">
           <div className="drawer-panel__actions">
             <button
               type="button"
@@ -51,21 +51,29 @@ export const Drawer: React.FC<DrawerProps> = () => {
               }`}
               onClick={() => goToStage(StagesEnum.TimerStage)}
             >
-              Timer
+              Home
             </button>
             <button
               type="button"
               className={`drawer-panel__button${
-                currentStage === StagesEnum.LogStage
+                currentStage === StagesEnum.PoolsStage
                   ? ' drawer-panel__button--active'
                   : ''
               }`}
-              onClick={() => goToStage(StagesEnum.LogStage)}
+              onClick={() => goToStage(StagesEnum.PoolsStage)}
             >
-              Log
+              Pools
             </button>
-            <button type="button" className="drawer-panel__button">
-              Settings
+            <button
+              type="button"
+              className={`drawer-panel__button${
+                currentStage === StagesEnum.ActivityStage
+                  ? ' drawer-panel__button--active'
+                  : ''
+              }`}
+              onClick={() => goToStage(StagesEnum.ActivityStage)}
+            >
+              Activity
             </button>
           </div>
           <button

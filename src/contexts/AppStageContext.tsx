@@ -3,7 +3,8 @@ import { ERROR_UNINITIALIZED_CONTEXT } from '../lib/constants';
 
 export enum StagesEnum {
   TimerStage = 0,
-  LogStage = 1,
+  PoolsStage = 2,
+  ActivityStage = 3,
 }
 
 /** Context */

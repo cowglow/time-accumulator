@@ -1,0 +1,108 @@
+.pool-detail {
+  width: min(92vw, 480px);
+  padding-bottom: var(--space-2xl);
+}
+
+.pool-detail__back {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: var(--space-sm);
+}
+
+.pool-detail__back:hover {
+  color: var(--color-text-bright);
+}
+
+.pool-detail__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.pool-detail__head h1 {
+  font-size: var(--text-lg);
+  color: var(--color-text-bright);
+}
+
+.pool-detail__delete {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: none;
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sharp);
+  color: var(--color-text-muted);
+  padding: var(--space-2xs) var(--space-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pool-detail__delete:hover {
+  border-color: var(--color-text-bright);
+  color: var(--color-text-bright);
+}
+
+.pool-detail__total {
+  background: var(--color-bg);
+  border: var(--border-hairline) solid var(--color-border);
+  padding: var(--space-md);
+  margin: var(--space-2xs) 0 var(--space-md);
+  text-align: center;
+}
+
+.pool-detail__total-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-bright);
+  font-weight: 700;
+}
+
+.pool-detail__total-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-top: var(--space-2xs);
+}
+
+.pool-detail__start {
+  display: block;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  background: var(--color-bg-raised);
+  border: var(--border-hairline) dashed var(--color-border-strong);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.pool-detail__start:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pool-detail__start--live {
+  border-style: solid;
+  border-color: var(--color-text-bright);
+  color: var(--color-text-bright);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+  margin: var(--space-lg) 0 var(--space-xs);
+}

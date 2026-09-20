@@ -1,12 +1,14 @@
 @import 'styles.base.css';
+@import 'fonts.css';
 
 /*
  * Design tokens — gray/tactical system.
  * Fully achromatic: every color token is a step on the gray scale.
  */
 :root {
-  /* Gray scale — 00 near-black, 80 near-white */
-  --c-gray-00: #0a0a0b;
+  /* Gray scale — pure black to pure white, per the PlayTimeStation palette:
+     monochrome only, hierarchy comes from brightness, not hue. */
+  --c-gray-00: #000000;
   --c-gray-10: #18181a;
   --c-gray-20: #2a2a2d;
   --c-gray-30: #424246;
@@ -14,7 +16,7 @@
   --c-gray-50: #87878c;
   --c-gray-60: #ababaf;
   --c-gray-70: #d2d2d4;
-  --c-gray-80: #f3f3f3;
+  --c-gray-80: #ffffff;
 
   /* Semantic surface/text roles built from the scale */
   --color-bg: var(--c-gray-00);
@@ -106,6 +108,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-bottom: 4rem;
+  justify-content: flex-start;
+  padding-top: calc(4rem + env(safe-area-inset-top, 0px));
 }

@@ -62,13 +62,27 @@ describe('useTimer', () => {
   });
 
   const wrapperWithTimestamp = (timestamp: false | string) => {
+    const running: RunningTimer | false = timestamp
+      ? { poolId: null, timestamp }
+      : false;
     return ({ children }: { children: React.ReactNode }) => (
       <AppStateContext.Provider
         value={{
-          timestamp,
-          log: [],
-          actionToggle: () => {},
-          resetLog: () => {},
+          pools: [],
+          entries: [],
+          running,
+          overlayOpen: false,
+          startTimer: () => {},
+          stopTimer: () => {},
+          retagRunning: () => {},
+          showOverlay: () => {},
+          hideOverlay: () => {},
+          addPool: () => {},
+          deletePool: () => {},
+          setEntriesState: () => {},
+          assignPool: () => {},
+          deleteEntry: () => {},
+          poolTotalMs: () => 0,
         }}
       >
         {children}

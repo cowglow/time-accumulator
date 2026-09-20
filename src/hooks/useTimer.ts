@@ -26,12 +26,14 @@ export const computeElapsed = (startUnixSeconds: number): ElapsedTime => {
 };
 
 export const useTimer = () => {
-  const { timestamp } = useAppState();
+  const { running } = useAppState();
   const [timer, setTimer] = useState<ElapsedTime>(ZERO_ELAPSED);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setTimer(timestamp ? computeElapsed(parseInt(timestamp, 10)) : ZERO_ELAPSED);
+      setTimer(
+        running ? computeElapsed(parseInt(running.timestamp, 10)) : ZERO_ELAPSED
+      );
     }, 100);
     return () => {
       clearTimeout(timeout);

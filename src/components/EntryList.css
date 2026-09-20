@@ -1,0 +1,113 @@
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.entry-list__empty {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-2xl) 0;
+}
+
+.entry-row {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--color-bg-raised);
+  border: var(--border-hairline) solid var(--color-border);
+  border-radius: var(--radius-sharp);
+}
+
+.entry-row--plain {
+  grid-template-columns: 1fr auto;
+}
+
+.entry-row--omitted {
+  opacity: 0.5;
+}
+
+.entry-row--omitted .entry-row__time {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-text-muted);
+}
+
+.entry-row__checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  background: var(--color-bg);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+}
+
+.entry-row__checkbox--checked {
+  background: var(--color-accent-fill);
+  border-color: var(--color-accent-fill);
+}
+
+.entry-row__checkbox--checked::after {
+  content: '\2713';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  color: var(--color-accent-fill-text);
+}
+
+.entry-row__time {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.entry-row__pool {
+  color: var(--color-text-muted);
+}
+
+.entry-row__day {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 0.125rem;
+}
+
+.entry-row__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.entry-row__duration {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+.entry-row__delete {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  background: none;
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sharp);
+  color: var(--color-text-muted);
+  padding: 0.1875rem 0.4375rem;
+  cursor: pointer;
+}
+
+.entry-row__delete:hover {
+  border-color: var(--color-text-bright);
+  color: var(--color-text-bright);
+}

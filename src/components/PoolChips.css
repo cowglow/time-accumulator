@@ -1,0 +1,32 @@
+.pool-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.pool-chip {
+  padding: var(--space-2xs) var(--space-sm);
+  background: var(--color-bg-raised);
+  border: var(--border-hairline) solid var(--color-border);
+  border-radius: var(--radius-sharp);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  cursor: pointer;
+}
+
+.pool-chip:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.pool-chip--none {
+  font-style: italic;
+}
+
+.pool-chip--picked {
+  border-color: var(--color-text-bright);
+  color: var(--color-text-bright);
+}
