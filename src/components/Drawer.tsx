@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Gear from '../assets/gear.svg?react';
 import { StagesEnum, useAppStage } from '../contexts/AppStageContext';
+import { useAppState } from '../contexts/AppStateContext';
 import './Drawer.css';
 
 interface DrawerProps {}
@@ -8,6 +9,7 @@ interface DrawerProps {}
 export const Drawer: React.FC<DrawerProps> = () => {
   const [show, setShow] = useState(false);
   const { currentStage, updateStage } = useAppStage();
+  const { running } = useAppState();
 
   const toggleHandler = () => {
     setShow(!show);
@@ -26,18 +28,28 @@ export const Drawer: React.FC<DrawerProps> = () => {
           href="https://github.com/cowglow/time-accumulator"
           target="_blank"
           rel="noreferrer"
+          title="cowglow/time-accumulator on GitHub"
         >
-          cowglow/time-accumulator
+          Time Accumulator
         </a>
-        <button
-          type="button"
-          className="drawer-bar__toggle"
-          onClick={toggleHandler}
-          aria-label="Open navigation"
-          aria-expanded={show}
-        >
-          <Gear />
-        </button>
+        <span className="drawer-bar__end">
+          <span
+            className={`drawer-bar__status${running ? ' drawer-bar__status--running' : ''}`}
+          >
+            <span className="drawer-bar__mark" aria-hidden="true" />
+            <span className="drawer-bar__node">Node 01 · </span>
+            {running ? 'Run' : 'Idle'}
+          </span>
+          <button
+            type="button"
+            className="drawer-bar__toggle"
+            onClick={toggleHandler}
+            aria-label="Open navigation"
+            aria-expanded={show}
+          >
+            <Gear />
+          </button>
+        </span>
       </nav>
       {show && (
         <div className="drawer-panel" role="dialog" aria-label="Navigation">

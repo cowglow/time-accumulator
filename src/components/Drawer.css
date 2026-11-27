@@ -11,23 +11,72 @@
   padding: calc(var(--space-sm) + env(safe-area-inset-top, 0px)) var(--space-lg)
     var(--space-sm);
   background: var(--bg);
-  border-bottom: var(--border-hairline) solid var(--hairline);
 }
 
-.drawer-bar__brand {
+/* hairline divider inset to the page gutter, as in the mockup */
+.drawer-bar::after {
+  content: '';
+  position: absolute;
+  left: var(--space-lg);
+  right: var(--space-lg);
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+#root .drawer-bar__brand {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.drawer-bar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.drawer-bar__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--secondary);
-  text-transform: lowercase;
+}
+
+.drawer-bar__mark {
+  width: 6px;
+  height: 6px;
+  border: var(--border-hairline) solid var(--structure);
+}
+
+.drawer-bar__status--running {
+  color: var(--primary);
+}
+
+.drawer-bar__status--running .drawer-bar__mark {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+@media (max-width: 359px) {
+  .drawer-bar__node {
+    display: none;
+  }
 }
 
 .drawer-bar__toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: var(--space-2xs);
   background: transparent;
   border: var(--border-hairline) solid var(--structure);
