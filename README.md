@@ -164,12 +164,40 @@ is an annotated `v*.*.*` git tag. Changes are recorded in
 [`CHANGELOG.md`](CHANGELOG.md). Commits follow
 [Conventional Commits](https://www.conventionalcommits.org/) from here on.
 
-To cut a release:
+Add an entry under `## [Unreleased]` in `CHANGELOG.md` as changes land. To
+cut a release:
 
-```sh
-npm version <patch|minor|major>   # bumps package.json, commits, tags vX.Y.Z
-git push --follow-tags
-```
+1. In `CHANGELOG.md`, add a heading for the new version under
+   `## [Unreleased]`, so the pending entries move under it and Unreleased
+   is left empty:
+
+   ```md
+   ## [Unreleased]
+
+   ## [X.Y.Z] - YYYY-MM-DD
+   ```
+
+   At the bottom of the file, point `[Unreleased]` at the new tag and add a
+   compare link for the new version:
+
+   ```md
+   [Unreleased]: https://github.com/cowglow/time-accumulator/compare/vX.Y.Z...HEAD
+   [X.Y.Z]: https://github.com/cowglow/time-accumulator/compare/vPREVIOUS...vX.Y.Z
+   ```
+
+2. Bump the version, then commit, tag and push everything together:
+
+   ```sh
+   npm version <patch|minor|major> --no-git-tag-version   # package.json + lockfile only
+   git add CHANGELOG.md package.json package-lock.json
+   git commit -m "chore(release): vX.Y.Z"
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   git push --follow-tags
+   ```
+
+   `--no-git-tag-version` is needed because plain `npm version` refuses to
+   run with uncommitted changes, and the dated changelog belongs in the
+   release commit.
 
 Pushing the tag runs [`.github/workflows/release.yml`](.github/workflows/release.yml),
 which tests and builds the app and publishes a GitHub Release with the built
