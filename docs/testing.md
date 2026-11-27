@@ -24,7 +24,7 @@ a failing test blocks both a deploy and a release.
 
 ## Test files
 
-12 files, 111 tests.
+10 files, 108 tests.
 
 | File | What it covers |
 | --- | --- |
@@ -38,8 +38,6 @@ a failing test blocks both a deploy and a release.
 | `src/lib/date-range.spec.ts` | Range start times for Today / Week / Month / All |
 | `src/lib/format-entry.spec.ts` | Time-of-day, day labels and short durations |
 | `src/lib/sort-entries.spec.ts` | Sorting by date and duration in both directions |
-| `src/lib/format-timestamp/format-timestamp.spec.ts` | Unused module (see [architecture.md](architecture.md#leftovers)) |
-| `src/lib/storage-reducer/storage-reducer.spec.ts` | Unused module (see [architecture.md](architecture.md#leftovers)) |
 
 ## Gaps
 

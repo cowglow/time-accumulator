@@ -9,7 +9,7 @@ when, see [`CHANGELOG.md`](../CHANGELOG.md) and the git history.
 - Plain CSS with custom properties: one `.css` file per component, plus the
   global tokens in `public/styles*.css` and the self-hosted IBM Plex Mono
   in `public/fonts/`
-- No runtime dependencies beyond React, plus `web-vitals`
+- No runtime dependencies beyond React
 - Native `Date`/`Intl` for all time maths and formatting
 - Vitest + jsdom for tests (see [`testing.md`](testing.md))
 - npm, with Node pinned in `.nvmrc`
@@ -143,14 +143,3 @@ Every entry is serialized the same way everywhere (ISO 8601 UTC start/end,
 unix seconds, duration, pool name, state). CSV output includes a UTF-8 BOM
 so spreadsheet apps detect the encoding. All data comes from this browser's
 `localStorage`, so it reflects one device only.
-
-## Leftovers
-
-These files predate the modernization and aren't used by the app:
-
-- `src/lib/storage-reducer/` and `src/lib/format-timestamp/`: only their
-  own specs import them.
-- `src/types/application.d.ts`: the reducer's `any`-typed action and state
-  types.
-- `src/reportWebVitals.ts`: called from `index.tsx` with no reporter, so it
-  does nothing.

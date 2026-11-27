@@ -15,6 +15,12 @@ and this project adheres to
 - New tagline in the README, page description and web app manifest:
   "Toggle time on and off and accumulate it into pools."
 
+### Removed
+
+- Unused modules left from the original app: `storage-reducer`,
+  `format-timestamp`, their types and specs, and `reportWebVitals` along
+  with the `web-vitals` dependency.
+
 ## [1.0.0] - 2026-11-28
 
 ### Added
