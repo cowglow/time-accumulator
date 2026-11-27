@@ -14,6 +14,8 @@
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  padding-bottom: var(--space-md);
+  border-bottom: var(--border-hairline) solid var(--hairline);
 }
 
 .timer-overlay__rec {
@@ -22,33 +24,16 @@
   gap: var(--space-xs);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--secondary);
+  color: var(--primary);
 }
 
-.timer-overlay__dot {
-  width: 0.4375rem;
-  height: 0.4375rem;
-  border-radius: 50%;
+/* square status mark, as in the mockup header */
+.timer-overlay__mark {
+  width: 6px;
+  height: 6px;
   background: var(--primary);
-  animation: timer-overlay-pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes timer-overlay-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .timer-overlay__dot {
-    animation: none;
-  }
 }
 
 .timer-overlay__minimize {
@@ -77,17 +62,30 @@
   gap: var(--space-xl);
 }
 
+.timer-overlay__frame {
+  width: min(100%, 340px);
+}
+
+.timer-overlay__frame .split-flap {
+  font-size: clamp(28px, 8vw, 34px);
+}
+
 .timer-overlay__stop {
   flex-shrink: 0;
   display: block;
   width: 100%;
   font-family: var(--font-mono);
-  font-size: var(--text-md);
-  letter-spacing: var(--tracking-wide);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   padding: var(--space-md);
+  background: none;
+  color: var(--primary);
+  border: var(--border-bold) solid var(--primary);
+  cursor: pointer;
+}
+
+.timer-overlay__stop:hover {
   background: var(--primary);
   color: var(--bg);
-  border: none;
-  cursor: pointer;
 }

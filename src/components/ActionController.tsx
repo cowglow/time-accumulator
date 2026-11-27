@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppState } from '../contexts/AppStateContext';
+import { BracketFrame } from './BracketFrame';
 import { ClockDisplay } from './ClockDisplay';
 import './ActionController.css';
 
@@ -7,6 +8,8 @@ interface ActionControllerProps {
   pendingPoolId: string | null;
 }
 
+/** The whole bracket-framed square is one tap target: it starts a timer when
+ *  idle, and reopens the running overlay (where Stop lives) while running. */
 export const ActionController: React.FC<ActionControllerProps> = ({
   pendingPoolId,
 }) => {
@@ -29,8 +32,10 @@ export const ActionController: React.FC<ActionControllerProps> = ({
       aria-pressed={running}
       aria-label={running ? 'View running timer' : 'Start timer'}
     >
-      <ClockDisplay />
-      <span className="dial__status">{running ? 'RUNNING' : 'READY'}</span>
+      <BracketFrame active={running}>
+        <ClockDisplay />
+        <span className="dial__action">{running ? 'OPEN' : 'START'}</span>
+      </BracketFrame>
     </button>
   );
 };
