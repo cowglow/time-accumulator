@@ -1,0 +1,135 @@
+.app-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: calc(3.75rem + env(safe-area-inset-top, 0px));
+  padding: calc(var(--space-sm) + env(safe-area-inset-top, 0px)) var(--space-lg)
+    var(--space-sm);
+  background: var(--bg);
+}
+
+/* hairline divider inset to the page gutter, as in the mockup */
+.app-header::after {
+  content: '';
+  position: absolute;
+  left: var(--space-lg);
+  right: var(--space-lg);
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.app-header__brand {
+  padding: var(--space-xs) 0;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.app-header__brand-short {
+  display: none;
+}
+
+@media (max-width: 479px) {
+  .app-header--running .app-header__brand-full {
+    display: none;
+  }
+
+  .app-header--running .app-header__brand-short {
+    display: inline;
+  }
+}
+
+button.app-header__brand {
+  cursor: pointer;
+}
+
+button.app-header__brand:hover {
+  color: var(--primary);
+}
+
+.app-header__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.app-header__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--secondary);
+  min-width: 0;
+}
+
+/* the running pool's slug: lower-case as written, truncated on narrow
+   screens rather than pushing the gear off the bar */
+.app-header__slug {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+.app-header__mark {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border: var(--border-hairline) solid var(--structure);
+  transition:
+    background-color var(--dur-slow) var(--ease-out),
+    border-color var(--dur-slow) var(--ease-out);
+}
+
+.app-header__status--running {
+  color: var(--primary);
+}
+
+.app-header__status--running .app-header__mark {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.app-header__pools {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: var(--space-2xs);
+  background: transparent;
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.app-header__pools:hover,
+.app-header__pools--active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.app-header__pools svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}

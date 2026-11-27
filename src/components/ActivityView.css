@@ -1,6 +1,7 @@
 .activity-view {
   width: min(100%, 480px);
-  padding-bottom: var(--space-2xl);
+  /* room to scroll the last row clear of the fixed selection footer */
+  padding-bottom: 7rem;
 }
 
 .activity-view h1 {

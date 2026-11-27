@@ -34,7 +34,7 @@ describe('AppStateContext', () => {
     expect(result.current.running).toBe(false);
   });
 
-  it('startTimer starts an untagged or tagged running timer and opens the overlay', () => {
+  it('startTimer starts a running timer in the given pool and opens the overlay', () => {
     const { result } = renderHook(() => useAppState(), {
       wrapper: AppStateProvider,
     });
@@ -81,7 +81,7 @@ describe('AppStateContext', () => {
     });
 
     act(() => {
-      result.current.startTimer(null);
+      result.current.startTimer('gym');
     });
     act(() => {
       result.current.retagRunning('water');
@@ -117,6 +117,32 @@ describe('AppStateContext', () => {
     expect(result.current.entries).toEqual([]);
   });
 
+  it('deletePool is blocked while that pool has the running timer', () => {
+    const { result } = renderHook(() => useAppState(), {
+      wrapper: AppStateProvider,
+    });
+
+    act(() => {
+      result.current.addPool('Gym');
+    });
+    const poolId = result.current.pools[0].id;
+    act(() => {
+      result.current.startTimer(poolId);
+    });
+    act(() => {
+      result.current.deletePool(poolId);
+    });
+    expect(result.current.pools).toHaveLength(1);
+
+    act(() => {
+      result.current.stopTimer();
+    });
+    act(() => {
+      result.current.deletePool(poolId);
+    });
+    expect(result.current.pools).toEqual([]);
+  });
+
   it('setEntriesState toggles entries between counted and omitted', () => {
     const { result } = renderHook(() => useAppState(), {
       wrapper: AppStateProvider,
@@ -147,7 +173,7 @@ describe('AppStateContext', () => {
     });
 
     act(() => {
-      result.current.startTimer(null);
+      result.current.startTimer('gym');
     });
     act(() => {
       result.current.stopTimer();
@@ -161,16 +187,15 @@ describe('AppStateContext', () => {
     expect(result.current.entries).toEqual([]);
   });
 
-  it('assignPool tags one or more untagged entries and forces them counted', () => {
+  it('assignPool moves legacy untagged entries into a pool and forces them counted', () => {
+    localStorage.setItem(
+      LOCALSTORAGE_ENTRIES_KEY,
+      JSON.stringify([
+        { id: 'legacy', poolId: null, timeIn: '1615100000', timeOut: '1615100060', state: 'omitted' },
+      ])
+    );
     const { result } = renderHook(() => useAppState(), {
       wrapper: AppStateProvider,
-    });
-
-    act(() => {
-      result.current.startTimer(null);
-    });
-    act(() => {
-      result.current.stopTimer();
     });
     const entryId = result.current.entries[0].id;
 

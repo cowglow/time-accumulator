@@ -5,7 +5,7 @@ import { ClockDisplay } from './ClockDisplay';
 import './ActionController.css';
 
 interface ActionControllerProps {
-  pendingPoolId: string | null;
+  pendingPoolId: string;
 }
 
 /** The whole bracket-framed square is one tap target: it starts a timer when

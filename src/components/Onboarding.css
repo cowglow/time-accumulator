@@ -1,0 +1,109 @@
+.onboarding {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(100%, 480px);
+  padding-block: var(--space-xl);
+}
+
+.onboarding .section-label {
+  margin-top: 0;
+}
+
+.onboarding__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.onboarding__copy {
+  margin: var(--space-sm) 0 var(--space-xl);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--secondary);
+}
+
+.onboarding__label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: var(--space-xs);
+}
+
+/* 16px text keeps iOS Safari from zooming on focus */
+.onboarding__input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--panel);
+  border: var(--border-hairline) solid var(--structure);
+  border-radius: 0;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.onboarding__input::placeholder {
+  color: var(--secondary);
+  opacity: 1;
+}
+
+.onboarding__input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.onboarding__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0 var(--space-xl);
+}
+
+.onboarding__suggestion {
+  padding: var(--space-2xs) var(--space-sm);
+  background: transparent;
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.onboarding__suggestion:hover,
+.onboarding__suggestion--picked {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.onboarding__submit {
+  width: 100%;
+  padding: var(--space-md);
+  background: none;
+  border: var(--border-bold) solid var(--primary);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.onboarding__submit:hover:not(:disabled) {
+  background: var(--primary);
+  color: var(--bg);
+}
+
+/* disabled: boundary recedes to --hairline; text keeps --secondary */
+.onboarding__submit:disabled {
+  border-color: var(--hairline);
+  color: var(--secondary);
+  cursor: default;
+}

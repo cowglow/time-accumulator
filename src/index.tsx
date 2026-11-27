@@ -3,17 +3,17 @@ import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { AppStateProvider } from './contexts/AppStateContext';
-import { AppStageProvider } from './contexts/AppStageContext';
+import { RouterProvider } from './contexts/RouterContext';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    <AppStageProvider>
+    <RouterProvider>
       <AppStateProvider>
         <App />
       </AppStateProvider>
-    </AppStageProvider>
+    </RouterProvider>
   </React.StrictMode>
 );
 

@@ -69,6 +69,7 @@ describe('useTimer', () => {
       <AppStateContext.Provider
         value={{
           pools: [],
+        slugs: new Map(),
           entries: [],
           running,
           overlayOpen: false,

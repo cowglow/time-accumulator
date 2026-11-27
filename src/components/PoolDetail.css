@@ -1,6 +1,7 @@
 .pool-detail {
   width: min(100%, 480px);
-  padding-bottom: var(--space-2xl);
+  /* room to scroll the last row clear of the fixed selection footer */
+  padding-bottom: 7rem;
 }
 
 .pool-detail__back {
@@ -20,9 +21,10 @@
 
 .pool-detail__head {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--space-sm);
+  gap: var(--space-xs) var(--space-sm);
 }
 
 .pool-detail__head h1 {
@@ -32,18 +34,40 @@
   color: var(--primary);
 }
 
-.pool-detail__delete {
+.pool-detail__actions {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+/* JSON / CSV / Delete pool share one small bordered treatment */
+#root .pool-detail__action,
+.pool-detail__action {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   background: none;
   border: var(--border-hairline) solid var(--structure);
   color: var(--secondary);
   padding: var(--space-2xs) var(--space-sm);
+  line-height: 1.5;
   cursor: pointer;
   white-space: nowrap;
 }
 
-.pool-detail__delete:hover {
+.pool-detail__action:disabled {
+  border-color: var(--hairline);
+  cursor: default;
+}
+
+.pool-detail__blocked {
+  margin-top: var(--space-xs);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+#root .pool-detail__action:hover,
+.pool-detail__action:hover:not(:disabled) {
   border-color: var(--primary);
   color: var(--primary);
 }
@@ -88,14 +112,8 @@
   cursor: pointer;
 }
 
-.pool-detail__start:disabled {
-  border-color: var(--hairline);
-  cursor: default;
-}
-
 .pool-detail__start--live {
   border-style: solid;
   border-color: var(--primary);
   color: var(--primary);
 }
-

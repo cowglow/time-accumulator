@@ -42,7 +42,11 @@ export const TimerOverlay: React.FC = () => {
         <BracketFrame active className="timer-overlay__frame">
           <ClockDisplay />
         </BracketFrame>
-        <PoolChips pools={pools} selectedPoolId={running.poolId} onSelect={retagRunning} />
+        <PoolChips
+          pools={pools}
+          selectedPoolId={running.poolId}
+          onSelect={retagRunning}
+        />
       </div>
       <button type="button" className="timer-overlay__stop" onClick={stopTimer}>
         Stop

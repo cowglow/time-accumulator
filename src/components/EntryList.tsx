@@ -8,9 +8,7 @@ interface EntryListProps {
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   poolName?: (id: string | null) => string;
-  /** false when no bulk action could ever apply to a selection here (e.g.
-   *  Activity with zero pools defined) — hides the checkbox entirely rather
-   *  than let people select entries that can't lead anywhere. */
+  /** false hides the selection checkbox. */
   selectable?: boolean;
 }
 
@@ -56,7 +54,7 @@ export const EntryList: React.FC<EntryListProps> = ({
             <div className="entry-row__mid">
               <div className="entry-row__time">
                 {formatTimeOfDay(start)} – {formatTimeOfDay(end)}
-                {poolName && entry.poolId !== null && (
+                {poolName && (
                   <span className="entry-row__pool"> · {poolName(entry.poolId)}</span>
                 )}
               </div>

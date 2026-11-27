@@ -135,7 +135,9 @@ button,
   flex-direction: column;
   align-items: center;
   width: 100%;
-  animation: view-in var(--dur-base) var(--ease-out) both;
+  /* backwards, not both: a transform held after the animation would turn
+     every view into the containing block for position: fixed children */
+  animation: view-in var(--dur-base) var(--ease-out) backwards;
 }
 
 @keyframes view-in {

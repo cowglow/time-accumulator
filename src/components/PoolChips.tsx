@@ -3,11 +3,14 @@ import './PoolChips.css';
 
 interface PoolChipsProps {
   pools: Pool[];
+  /** null only for a legacy untagged running timer — then nothing is picked. */
   selectedPoolId: string | null;
-  onSelect: (poolId: string | null) => void;
+  onSelect: (poolId: string) => void;
   disabled?: boolean;
 }
 
+/** Pick the pool a timer accumulates into. Every timer belongs to a pool,
+ *  so there is no "none" choice. */
 export const PoolChips: React.FC<PoolChipsProps> = ({
   pools,
   selectedPoolId,
@@ -15,16 +18,6 @@ export const PoolChips: React.FC<PoolChipsProps> = ({
   disabled,
 }) => (
   <div className="pool-chips">
-    <button
-      type="button"
-      className={`pool-chip pool-chip--none${
-        selectedPoolId === null ? ' pool-chip--picked' : ''
-      }`}
-      onClick={() => onSelect(null)}
-      disabled={disabled}
-    >
-      No pool
-    </button>
     {pools.map(pool => (
       <button
         key={pool.id}
@@ -34,6 +27,7 @@ export const PoolChips: React.FC<PoolChipsProps> = ({
         }`}
         onClick={() => onSelect(pool.id)}
         disabled={disabled}
+        aria-pressed={selectedPoolId === pool.id}
       >
         {pool.name}
       </button>

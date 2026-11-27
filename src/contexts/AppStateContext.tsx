@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { poolSlugs } from '../lib/slug';
 import {
   ERROR_UNINITIALIZED_CONTEXT,
   LOCALSTORAGE_CHECKIN_KEY,
@@ -52,18 +53,20 @@ const migrateLegacyCheckin = (): RunningTimer | false => {
 /** Context */
 export interface AppStateContextProps {
   pools: Pool[];
+  /** pool id → unique URL slug, derived from the names */
+  slugs: Map<string, string>;
   entries: TimeEntry[];
   running: RunningTimer | false;
   overlayOpen: boolean;
-  startTimer: (poolId: string | null) => void;
+  startTimer: (poolId: string) => void;
   stopTimer: () => void;
-  retagRunning: (poolId: string | null) => void;
+  retagRunning: (poolId: string) => void;
   showOverlay: () => void;
   hideOverlay: () => void;
   addPool: (name: string) => void;
   deletePool: (poolId: string) => void;
   setEntriesState: (ids: string[], state: PoolEntryState) => void;
-  assignPool: (ids: string[], poolId: string | null) => void;
+  assignPool: (ids: string[], poolId: string) => void;
   deleteEntry: (id: string) => void;
   poolTotalMs: (poolId: string | null, sinceSeconds: number) => number;
 }
@@ -74,6 +77,7 @@ const notReady = (): never => {
 
 const defaultValues: AppStateContextProps = {
   pools: [],
+  slugs: new Map(),
   entries: [],
   running: false,
   overlayOpen: false,
@@ -111,8 +115,9 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
     migrateLegacyCheckin()
   );
   const [overlayOpen, setOverlayOpen] = React.useState(false);
+  const slugs = React.useMemo(() => poolSlugs(pools), [pools]);
 
-  const startTimer = (poolId: string | null) => {
+  const startTimer = (poolId: string) => {
     setRunning({ poolId, timestamp: nowSeconds() });
     setOverlayOpen(true);
   };
@@ -133,7 +138,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
     setOverlayOpen(false);
   };
 
-  const retagRunning = (poolId: string | null) => {
+  const retagRunning = (poolId: string) => {
     setRunning(current => (current ? { ...current, poolId } : current));
   };
 
@@ -150,6 +155,9 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
    *  survive as orphans, matching the decision to batch-remove rather than
    *  fall back to untagged. */
   const deletePool = (poolId: string) => {
+    // A pool can't be deleted while its timer is running — the running timer
+    // would be left pointing at a pool that no longer exists.
+    if (running && running.poolId === poolId) return;
     setPools(list => list.filter(p => p.id !== poolId));
     setEntries(list => list.filter(e => e.poolId !== poolId));
   };
@@ -161,7 +169,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
     );
   };
 
-  const assignPool = (ids: string[], poolId: string | null) => {
+  const assignPool = (ids: string[], poolId: string) => {
     const idSet = new Set(ids);
     setEntries(list =>
       list.map(e => (idSet.has(e.id) ? { ...e, poolId, state: 'counted' } : e))
@@ -189,6 +197,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
     <AppStateContext.Provider
       value={{
         pools,
+        slugs,
         entries,
         running,
         overlayOpen,
