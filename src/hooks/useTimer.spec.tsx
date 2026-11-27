@@ -39,11 +39,11 @@ describe('computeElapsed', () => {
     });
   });
 
-  it('wraps hours modulo 24 for elapsed durations over a day (documented pre-existing behavior)', () => {
+  it('keeps counting hours past a day instead of wrapping at 24', () => {
     const elapsedMs = (25 * 3600 + 5 * 60 + 6) * 1000; // 25h 5m 6s
     const startSeconds = (FIXED_NOW_MS - elapsedMs) / 1000;
     expect(computeElapsed(startSeconds)).toEqual({
-      hour: 1,
+      hour: 25,
       minute: 5,
       seconds: 6,
       milliseconds: 0,

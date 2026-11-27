@@ -18,7 +18,7 @@ const ZERO_ELAPSED: ElapsedTime = {
 export const computeElapsed = (startUnixSeconds: number): ElapsedTime => {
   const diff = Date.now() - startUnixSeconds * 1000;
   return {
-    hour: Math.floor(diff / 3_600_000) % 24,
+    hour: Math.floor(diff / 3_600_000),
     minute: Math.floor(diff / 60_000) % 60,
     seconds: Math.floor(diff / 1_000) % 60,
     milliseconds: Math.floor((diff % 1000) * 0.1),
