@@ -1,220 +1,156 @@
-# Architecture (pre-modernization snapshot)
+# Architecture
 
-This document describes the app as it exists today, before any tooling,
-styling, or UX modernization work begins. It is a snapshot, not a spec.
+How Time Accumulator is put together as of v1.0.0. For what changed and
+when, see [`CHANGELOG.md`](../CHANGELOG.md) and the git history.
 
-## Stack at time of writing
+## Stack
 
-- Create React App (`react-scripts` 4.0.1), React 17, TypeScript 4
-- `react-bootstrap` + `bootstrap` 5 for all UI components/styling
-- `moment` for all date/duration math
-- Package manager: Yarn (`yarn.lock` present)
-- Tests: `react-scripts test` (Jest under the hood) + `@testing-library/react`
-- No CI: there is no `.github/workflows` directory in this repo
+- React 19 + TypeScript 5, built with Vite (`vite.config.ts`)
+- Plain CSS with custom properties: one `.css` file per component, plus the
+  global tokens in `public/styles*.css` and the self-hosted IBM Plex Mono
+  in `public/fonts/`
+- No runtime dependencies beyond React, plus `web-vitals`
+- Native `Date`/`Intl` for all time maths and formatting
+- Vitest + jsdom for tests (see [`testing.md`](testing.md))
+- npm, with Node pinned in `.nvmrc`
+- Deployed to GitHub Pages by `.github/workflows/deploy.yml`, and released
+  from `v*.*.*` tags by `.github/workflows/release.yml`
+
+## Domain model
+
+All types are global, declared in `src/types/domain.d.ts`.
+
+| Type           | Shape                                       | Meaning                                                                 |
+| -------------- | ------------------------------------------- | ----------------------------------------------------------------------- |
+| `Pool`         | `{ id, name }`                              | A bucket that time accumulates into (e.g. "Deep work")                  |
+| `TimeEntry`    | `{ id, poolId, timeIn, timeOut, state }`    | One finished timer run. `timeIn`/`timeOut` are unix seconds as strings  |
+| `RunningTimer` | `{ poolId, timestamp }`                     | The single timer that can be running app-wide                           |
+| `PoolEntryState` | `'counted' \| 'omitted'`                  | Omitted entries stay in the log but are left out of totals              |
+
+Every new entry belongs to a pool. `poolId` is `null` only for time carried
+over from the pre-pools single log (see "Legacy migration"). Activity shows
+those entries as **Untagged** so they can be assigned to a pool.
 
 ## Component tree
 
-```
+```text
 index.tsx
-└─ AppStageProvider        (src/contexts/AppStageContext.tsx)
-   └─ AppStateProvider      (src/contexts/AppStateContext.tsx)
-      └─ App                (src/components/App.tsx)
-         ├─ ClockDisplay    (src/components/ClockDisplay.tsx)
-         ├─ ActionController (src/components/ActionController.tsx)
-         └─ Drawer          (src/components/Drawer.tsx)
+└─ RouterProvider            src/contexts/RouterContext.tsx
+   └─ AppStateProvider       src/contexts/AppStateContext.tsx
+      └─ App                 src/components/App.tsx
+         ├─ DataView         data routes only: raw JSON, or a CSV download
+         ├─ Onboarding       shown instead of everything below while no pool exists
+         ├─ AppHeader        brand → Home, status, gear toggles Pools
+         ├─ view (keyed by route)
+         │  ├─ HomeView      ActionController (dial) + PoolChips + "LOG · NN ENTRIES →"
+         │  ├─ ActivityView  RangeChips + EntrySortControl + EntryList + BulkBar
+         │  ├─ PoolsList     pools, add/delete, complete-log CSV
+         │  └─ PoolDetail    totals, entries, start/open, JSON/CSV links, delete
+         └─ TimerOverlay     full-screen running view (Stop, Minimize, retag pool)
 ```
 
-`LogDisplay` (src/components/LogDisplay.tsx) exists but is **not mounted
-anywhere** — see "Dead / unused code" below.
+Shared pieces: `BracketFrame` (the square bracket-corner frame used by the
+dial and the overlay), `ClockDisplay` (split-flap HH:MM:SS tiles),
+`PoolChips`, `RangeChips` (Today, This week, Current month, Complete log), `EntryList`,
+`EntrySortControl` (sort by date or duration, descending by default) and
+`BulkBar` (the "{n} selected | Tag pool ▾ | Omit/Restore" footer, portaled to
+`document.body`).
 
-## Context: `AppStateContext`
+## State: `AppStateContext`
 
-File: `src/contexts/AppStateContext.tsx`
+`src/contexts/AppStateContext.tsx` owns all app data. It persists three
+values with `useLocalStorage`:
 
-This is the one context that actually drives behavior. It exposes:
+| Key                         | Value                   |
+| --------------------------- | ----------------------- |
+| `LOCALSTORAGE_POOLS_KEY`    | `Pool[]`                |
+| `LOCALSTORAGE_ENTRIES_KEY`  | `TimeEntry[]`           |
+| `LOCALSTORAGE_RUNNING_KEY`  | `RunningTimer \| false` |
 
-| Field          | Type              | Meaning                                                                 |
-|----------------|-------------------|--------------------------------------------------------------------------|
-| `timestamp`    | `false \| string` | Unix seconds (as a string) of the current check-in, or `false` if stopped |
-| `log`          | `LogType[]`       | Array of `{ timeIn: string; timeOut: string }` (unix seconds, as strings) |
-| `actionToggle` | `() => void`      | Start/stop toggle                                                       |
-| `resetLog`     | `() => void`      | Clears `log` to `[]`                                                    |
+`overlayOpen` is in-memory only, and `slugs` (pool id → unique URL slug) is
+derived from the pool names with `poolSlugs` in `src/lib/slug.ts`.
 
-Internally it uses `useLocalStorage` (src/hooks/useLocalStorage.ts) twice:
-- `LOCALSTORAGE_CHECKIN_KEY` → the current `timestamp`/checkin value
-- `LOCALSTORAGE_LOG_KEY` → the `log` array
+Actions:
 
-`toggle()` logic:
-- If not checked in (`!checkin`): stamps `moment().unix()` and stores it as
-  the checkin timestamp (start of a session).
-- If already checked in: pushes `{ timeIn: checkin, timeOut: newTimestamp }`
-  onto `log`, then clears the checkin back to `false` (stop).
+- `startTimer(poolId)` stores a `RunningTimer` stamped with the current time
+  and opens the overlay.
+- `stopTimer()` appends a counted `TimeEntry` from the running timer,
+  clears it, and closes the overlay.
+- `retagRunning(poolId)` moves the running timer to another pool.
+- `addPool(name)` and `deletePool(poolId)`. Deleting a pool also deletes its
+  entries, and a pool whose timer is running can't be deleted.
+- `setEntriesState(ids, state)` omits or restores entries, and
+  `assignPool(ids, poolId)` retags them (which also counts them again).
+- `deleteEntry(id)`.
+- `poolTotalMs(poolId, sinceSeconds)` sums the counted entries that ended
+  after `sinceSeconds`.
 
-So persistence of the **checkin/log state** already exists today via
-`useLocalStorage`, but the **live running timer's elapsed display** does not
-persist/resume any differently — see the timer hook below.
+`useLocalStorage` (`src/hooks/useLocalStorage.ts`) reads once on mount and
+writes on every change. If storage is unavailable (private mode, quota) it
+keeps working in memory.
 
-## Context: `AppStageContext`
+### Legacy migration
 
-File: `src/contexts/AppStageContext.tsx`
+Before pools, the app stored a single log under `LOCALSTORAGE_LOG_KEY` and a
+check-in timestamp under `LOCALSTORAGE_CHECKIN_KEY`. They are read only as the
+*default value* for the new keys, so the migration runs once, on the first
+load after an upgrade: old log rows become untagged counted entries, and an
+in-progress check-in becomes an untagged running timer. The old keys are left
+untouched.
 
-Exposes a `currentStage` (`TimerStage` | `LogStage`) enum and an
-`updateStage` setter. **This context is provided in `index.tsx` but no
-component ever calls `useAppStage()`.** It's fully wired up (provider +
-hook) but entirely unconsumed — dead state as of this snapshot.
+## Timer: `useTimer`
 
-## `useLocalStorage` hook
+`src/hooks/useTimer.ts` doesn't count ticks. Every 100 ms it recomputes the
+elapsed time from the running timer's start timestamp with `computeElapsed`.
+That's why a reload, a closed tab or a throttled background tab never loses
+time: the stored start timestamp is the whole truth. Hours are not wrapped at
+24.
 
-File: `src/hooks/useLocalStorage.ts`
+## Routing: `RouterContext`
 
-Minimal `useState` wrapper: reads `localStorage.getItem(key)` once as the
-lazy initial state, and calls `localStorage.setItem(key, JSON.stringify(value))`
-**on every render** (not inside a `useEffect`, not gated on the value
-changing). Returns `[value, setValue]` in the same shape as `useState`, but
-without generics — the return type is implicitly `any[]`.
+`src/contexts/RouterContext.tsx` is a minimal History-API router: the URL is
+the source of truth, `navigate()` pushes or replaces a history entry, and
+back/forward work. Routes are parsed and built in `src/lib/routes.ts`, all
+under the deploy base `/time-accumulator/`:
 
-## `useTimer` hook — the core clock logic
+| Path                 | View                                                    |
+| -------------------- | ------------------------------------------------------- |
+| `/`                  | Home (timer)                                            |
+| `/activity`          | Activity log                                            |
+| `/pool`              | Pools list                                              |
+| `/pool/json`         | The complete log as JSON, rendered as the page          |
+| `/pool/csv`          | Downloads the complete log as CSV, then shows Pools     |
+| `/pool/{slug}`       | One pool                                                |
+| `/pool/{slug}/json`  | That pool's JSON document, rendered as the page         |
+| `/pool/{slug}/csv`   | Downloads that pool's entries as CSV, then shows it     |
 
-File: `src/hooks/useTimer.ts`
+Unknown paths fall back to Home and the URL is corrected. `json` and `csv`
+are reserved slugs, so a pool can never shadow a data route.
 
-```ts
-export const useTimer = () => {
-  const { timestamp } = useAppState();
+GitHub Pages has no server-side routing, so the `spa-404-fallback` plugin in
+`vite.config.ts` copies `index.html` to `404.html` at build time, and the app
+routes from `location.pathname` on any deep link.
 
-  const reset = moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-  const [clock] = useState<Moment | Duration>(reset);
-  const [timer, setTimer] = useState(clock);
+## Export
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (timestamp) {
-        setTimer(moment.duration(moment().diff(moment.unix(parseInt(timestamp)))));
-      } else {
-        setTimer(reset);
-      }
-    }, 100);
-    return () => clearTimeout(timeout);
-  });
+`src/lib/export.ts` defines the stable data shapes for use outside the app:
 
-  return {
-    hour: timer.hours(),
-    minute: timer.minutes(),
-    seconds: timer.seconds(),
-    milliseconds: Math.floor(timer.milliseconds() * 0.1),
-  };
-};
-```
+- `time-accumulator/export` (version 1): the complete log
+- `time-accumulator/pool` and `time-accumulator/pools`: one pool, or the
+  "pool not found" document that lists the pools that do exist
 
-How it works:
-- **Elapsed calculation**: not a running "tick" — every 100ms it
-  recomputes `moment.duration(now - checkinTimestamp)` from scratch. So the
-  displayed duration is always derived from `Date.now()` minus the
-  persisted `timestamp`, not from incrementing a counter.
-- **The `useEffect` has no dependency array**, so it re-runs after *every*
-  render (mount, and after every `setTimer` call), which is what drives the
-  100ms polling loop — each run schedules the next `setTimeout`. This is a
-  self-perpetuating effect pattern, not `setInterval`.
-- `reset` and `clock` are computed once via `useState(reset)`'s lazy
-  initializer semantics (`moment().set(...)` only evaluates once, on
-  mount) and reused as the "zeroed" `Duration`/`Moment` when stopped.
-- Return shape exposes `hour`/`minute`/`seconds` (all integers, no
-  padding) and a `milliseconds` field that is actually **hundredths of a
-  second** (`Math.floor(ms * 0.1)` where `ms` ranges 0-999, so the result
-  ranges 0-99) — `milliseconds` is a misleading name for what's really a
-  centisecond value. Verified directly against the ported
-  `computeElapsed` unit tests added in Phase 1. Note this field is
-  computed but **never consumed** by any component today.
+Every entry is serialized the same way everywhere (ISO 8601 UTC start/end,
+unix seconds, duration, pool name, state). CSV output includes a UTF-8 BOM
+so spreadsheet apps detect the encoding. All data comes from this browser's
+`localStorage`, so it reflects one device only.
 
-### Edge cases actually handled
+## Leftovers
 
-- **Page reload while stopped**: `timestamp` is `false` (from
-  localStorage), `reset` duration is shown. Handled correctly.
-- **Page reload while running**: `timestamp` is restored from
-  localStorage by `AppStateContext`'s `useLocalStorage`, and `useTimer`
-  recomputes `moment().diff(moment.unix(timestamp))` — so elapsed time
-  correctly continues from the real start time rather than resetting to
-  zero. This works *by construction* (diff against a persisted absolute
-  timestamp), not because of any explicit reload-handling code.
+These files predate the modernization and aren't used by the app:
 
-### Edge cases NOT handled
-
-- **Tab backgrounding / throttled timers**: no visibility-change
-  listener, no `document.hidden` check, no correction for browser
-  throttling of `setTimeout` in background tabs. Because the elapsed
-  value is recomputed from an absolute timestamp diff (not accumulated
-  tick-by-tick), throttling only delays *when* the display updates, not
-  its *correctness* once it does update — but there's no explicit
-  handling, it's incidental to the diff-based design.
-- **Effect re-run cost**: because the `useEffect` dependency array is
-  omitted, it tears down and re-schedules a `setTimeout` on every single
-  render (including renders caused by unrelated state elsewhere in the
-  tree, e.g. `Drawer`'s `show` state, since `useTimer` is called from
-  `ClockDisplay` which is a sibling under the same `App` re-render scope
-  only if such state is lifted — in practice here each component owns its
-  own state so this is bounded to `ClockDisplay`, but still re-runs on
-  every one of its own re-renders).
-- **Negative/clock-skew durations**: if `timestamp` were ever in the
-  future (clock skew, manual localStorage edits), `moment().diff(...)`
-  would go negative and `moment.duration()` behavior on negative input is
-  not accounted for.
-- **No cleanup of the interval pattern across unmount racing with
-  timeout firing**: mitigated by the `clearTimeout` in the effect
-  cleanup, so this one *is* handled correctly.
-
-## How components consume the context
-
-- **`ClockDisplay`** (`src/components/ClockDisplay.tsx`): calls
-  `useTimer()`, renders `hour:minute:seconds` (zero-padded to 2 digits)
-  inside a `react-bootstrap` `Card`. Does not use `milliseconds`.
-- **`ActionController`** (`src/components/ActionController.tsx`): calls
-  `useAppState()` directly (not `useTimer`), reads `timestamp` to decide
-  button label/color (`Start`/`success` vs `Stop`/`danger`) and wires
-  `onClick` to `actionToggle`. Destructures `resetLog` but never calls it
-  — unused.
-- **`LogDisplay`** (`src/components/LogDisplay.tsx`): calls
-  `useAppState()` for `log`, maps entries through `formatLog`. **Not
-  rendered anywhere** in the current tree (see dead code below).
-- **`Drawer`** (`src/components/Drawer.tsx`): purely local `useState` for
-  offcanvas open/close; its "Log" and "Settings" buttons have no
-  `onClick` handlers — they render but do nothing.
-- **`App`** (`src/components/App.tsx`): composes `ClockDisplay` +
-  `ActionController` + `Drawer`; does not consume either context
-  directly itself.
-
-## Data flow: user clicks Start/Stop → UI re-renders
-
-```mermaid
-flowchart TD
-    A[User clicks Start/Stop button<br/>ActionController] -->|onClick| B[actionToggle from AppStateContext]
-    B --> C{checkin truthy?}
-    C -- "no (was stopped)" --> D["setCheckin(moment().unix())<br/>via useLocalStorage"]
-    C -- "yes (was running)" --> E["setTimeLog([...log, {timeIn, timeOut}])<br/>setCheckin(false)"]
-    D --> F[useLocalStorage writes to<br/>localStorage on render]
-    E --> F
-    F --> G[AppStateContext re-renders<br/>with new timestamp/log]
-    G --> H[ClockDisplay's useTimer<br/>reads updated timestamp]
-    H --> I["useEffect(no deps) fires ->\nsetTimeout 100ms"]
-    I --> J["setTimer(moment.duration(now - timestamp))\nor reset if stopped"]
-    J --> K[ClockDisplay re-renders\nhour:minute:seconds]
-    K --> I
-```
-
-The loop at the bottom (`I -> J -> K -> I`) is the self-scheduling 100ms
-poll described above; it runs continuously while `ClockDisplay` is
-mounted, independent of whether the timer is actually running (when
-stopped, it just keeps re-setting `reset` every 100ms).
-
-## Dead / unused code found during this audit
-
-- `src/components/LogDisplay.tsx` — never imported/rendered.
-- `src/contexts/AppStageContext.tsx` — provider wraps the app in
-  `index.tsx`, but `useAppStage()` is never called anywhere.
-- `src/lib/storage-reducer/storage-reducer.ts` — a reducer with
-  `START_RECORDING`/`ADD_TASK`/`UPDATE_TASK`/`CLEAR_COMPLETED` action
-  types, only referenced by its own spec file; not wired into any context
-  or component.
-- `Drawer`'s "Log" and "Settings" buttons — rendered, no handlers.
-- `ActionController` destructures `resetLog` from context but never
-  invokes it — there is currently no UI path to actually clear the log.
-- `useTimer`'s `milliseconds` return value — computed, never read by any
-  consumer.
+- `src/lib/storage-reducer/` and `src/lib/format-timestamp/`: only their
+  own specs import them.
+- `src/types/application.d.ts`: the reducer's `any`-typed action and state
+  types.
+- `src/reportWebVitals.ts`: called from `index.tsx` with no reporter, so it
+  does nothing.

@@ -8,7 +8,7 @@
 
 # Time Accumulator
 
-Toggle time on and off and keep a log of the laps.
+Toggle time on and off and accumulate it into pools.
 
 [![Deploy](https://img.shields.io/github/actions/workflow/status/cowglow/time-accumulator/deploy.yml?branch=master&label=deploy&style=flat-square&labelColor=15171a&color=f5f5f3)](https://github.com/cowglow/time-accumulator/actions/workflows/deploy.yml)
 [![Live demo](https://img.shields.io/badge/demo-live-f5f5f3?style=flat-square&labelColor=15171a&color=f5f5f3)](https://cowglow.github.io/time-accumulator/)
@@ -99,8 +99,8 @@ Pushes to `master` are tested, built and deployed to GitHub Pages by
 .
 ├── .github/workflows/   deploy.yml (test, build, Pages) and release.yml (tagged releases)
 ├── docs/
-│   ├── architecture.md  pre-modernization architecture snapshot
-│   ├── testing.md       pre-modernization test-suite snapshot
+│   ├── architecture.md  domain model, state, routing, export
+│   ├── testing.md       how the test suite is set up and what it covers
 │   ├── brand/           logo, social preview, BRAND.md
 │   └── screenshots/     images used in this README
 ├── public/              icons, manifest, global stylesheets, self-hosted fonts
@@ -131,10 +131,8 @@ Tests are Vitest unit tests for the hooks, the context and the `lib/` logic,
 plus app-level tests that render the whole app in jsdom to cover onboarding,
 routing, export and the selection footer. Run them with `npm test`.
 
-[`docs/architecture.md`](docs/architecture.md) and
-[`docs/testing.md`](docs/testing.md) are snapshots of the original Create
-React App version, written before the modernization; they are kept for
-history.
+More detail in [`docs/architecture.md`](docs/architecture.md) and
+[`docs/testing.md`](docs/testing.md).
 
 ## Design
 

@@ -1,7 +1,7 @@
 {
   "name": "Time Accumulator",
   "short_name": "Accumulator",
-  "description": "Toggle time on and off and keep a log of the laps.",
+  "description": "Toggle time on and off and accumulate it into pools.",
   "lang": "en",
   "start_url": "./",
   "scope": "./",

@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Rewrote `docs/architecture.md` and `docs/testing.md` to describe the
+  current app instead of the original Create React App version.
+- New tagline in the README, page description and web app manifest:
+  "Toggle time on and off and accumulate it into pools."
+
 ## [1.0.0] - 2026-11-28
 
 ### Added
