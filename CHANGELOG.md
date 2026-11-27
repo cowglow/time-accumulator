@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-28
+
 ### Changed
 
 - Rewrote `docs/architecture.md` and `docs/testing.md` to describe the
@@ -103,7 +105,8 @@ and this project adheres to
 - Original Create React App / React 17 version: start/stop timer with a
   `localStorage`-backed log, styled with react-bootstrap.
 
-[Unreleased]: https://github.com/cowglow/time-accumulator/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/cowglow/time-accumulator/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/cowglow/time-accumulator/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cowglow/time-accumulator/compare/v0.4.0...v1.0.0
 [0.4.0]: https://github.com/cowglow/time-accumulator/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/cowglow/time-accumulator/compare/v0.2.0...v0.3.0
