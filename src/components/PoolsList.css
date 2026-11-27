@@ -51,8 +51,8 @@
   display: block;
   width: 100%;
   text-align: left;
-  background: var(--bg);
-  border: var(--border-hairline) solid var(--hairline);
+  background: transparent;
+  border: var(--border-hairline) solid var(--structure);
   padding: var(--space-md);
   color: var(--secondary);
   cursor: pointer;
@@ -65,8 +65,13 @@
 }
 
 .pool-card__name {
-  font-size: var(--text-md);
-  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.pool-card:hover {
+  border-color: var(--primary);
 }
 
 .pool-card__total {
@@ -78,8 +83,8 @@
 
 .pool-card__gauge {
   margin-top: var(--space-sm);
-  height: 0.5rem;
-  background: var(--bg);
+  height: 0.375rem;
+  background: var(--panel);
   border: var(--border-hairline) solid var(--hairline);
   overflow: hidden;
 }

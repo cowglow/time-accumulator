@@ -126,7 +126,7 @@ export const PoolDetail: React.FC<PoolDetailProps> = ({ poolId, onBack }) => {
         onClick={handleStartControl}
         disabled={running !== false && !isRunningHere}
       >
-        {isRunningHere ? '● Running here — tap to view' : '▸ Start timer in this pool'}
+        {isRunningHere ? '■ Running here — tap to view' : '▸ Start timer in this pool'}
       </button>
       <div className="section-label">Entries</div>
       <EntryList

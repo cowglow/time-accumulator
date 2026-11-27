@@ -7,25 +7,28 @@
 
 .pool-chip {
   padding: var(--space-2xs) var(--space-sm);
-  background: var(--bg);
-  border: var(--border-hairline) solid var(--hairline);
+  background: transparent;
+  border: var(--border-hairline) solid var(--structure);
   color: var(--secondary);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   cursor: pointer;
 }
 
+.pool-chip:hover:not(:disabled) {
+  color: var(--primary);
+}
+
+/* disabled: the boundary recedes to --hairline; text keeps --secondary */
 .pool-chip:disabled {
   cursor: default;
-  opacity: 0.5;
+  border-color: var(--hairline);
 }
 
-.pool-chip--none {
-  font-style: italic;
-}
-
-.pool-chip--picked {
+.pool-chip--picked,
+.pool-chip--picked:disabled {
   border-color: var(--primary);
   color: var(--primary);
 }

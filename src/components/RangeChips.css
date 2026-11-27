@@ -8,12 +8,17 @@
 .range-chip {
   padding: var(--space-2xs) var(--space-sm);
   background: transparent;
-  border: var(--border-hairline) solid var(--hairline);
+  border: var(--border-hairline) solid var(--structure);
   color: var(--secondary);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   cursor: pointer;
+}
+
+.range-chip:hover {
+  color: var(--primary);
 }
 
 .range-chip--picked {

@@ -107,7 +107,7 @@
   padding: calc(var(--space-2xl) + env(safe-area-inset-top, 0px)) var(--space-lg)
     var(--space-xl);
   background: var(--bg);
-  border-bottom: var(--border-bold) solid var(--structure);
+  border-bottom: var(--border-hairline) solid var(--hairline);
 }
 
 .drawer-panel__actions {
@@ -147,9 +147,9 @@
 
 .drawer-panel__close {
   padding: var(--space-sm) var(--space-md);
-  background: var(--primary);
-  border: var(--border-hairline) solid var(--primary);
-  color: var(--bg);
+  background: transparent;
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
   font-family: var(--font-mono);
   font-size: var(--text-md);
   letter-spacing: var(--tracking-wide);
