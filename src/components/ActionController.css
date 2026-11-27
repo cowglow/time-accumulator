@@ -5,8 +5,8 @@
   gap: var(--space-md);
   width: 100%;
   padding: var(--space-xl) var(--space-lg);
-  background: var(--color-bg-raised);
-  border: var(--border-hairline) solid var(--color-border);
+  background: var(--bg);
+  border: var(--border-hairline) solid var(--hairline);
   color: inherit;
   font: inherit;
   cursor: pointer;
@@ -14,23 +14,23 @@
 }
 
 .dial:focus-visible {
-  outline: var(--border-bold) solid var(--color-text-bright);
+  outline: var(--border-bold) solid var(--primary);
   outline-offset: var(--space-2xs);
 }
 
 .dial--running {
-  border-color: var(--color-text-bright);
+  border-color: var(--primary);
 }
 
 .dial__status {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wider);
-  color: var(--color-text-muted);
+  color: var(--secondary);
 }
 
 .dial--running .dial__status {
-  color: var(--color-text-bright);
+  color: var(--primary);
 }
 
 .dial--running .dial__status::before {

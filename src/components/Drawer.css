@@ -10,15 +10,15 @@
   gap: var(--space-md);
   padding: calc(var(--space-sm) + env(safe-area-inset-top, 0px)) var(--space-lg)
     var(--space-sm);
-  background: var(--color-bg-raised);
-  border-bottom: var(--border-hairline) solid var(--color-border);
+  background: var(--bg);
+  border-bottom: var(--border-hairline) solid var(--hairline);
 }
 
 .drawer-bar__brand {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
-  color: var(--color-text-muted);
+  color: var(--secondary);
   text-transform: lowercase;
 }
 
@@ -30,15 +30,14 @@
   height: 2.5rem;
   padding: var(--space-2xs);
   background: transparent;
-  border: var(--border-hairline) solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
   cursor: pointer;
 }
 
 .drawer-bar__toggle:hover {
-  border-color: var(--color-text-bright);
-  color: var(--color-text-bright);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .drawer-bar__toggle svg {
@@ -58,8 +57,8 @@
   gap: var(--space-xl);
   padding: calc(var(--space-2xl) + env(safe-area-inset-top, 0px)) var(--space-lg)
     var(--space-xl);
-  background: var(--color-bg-raised);
-  border-bottom: var(--border-bold) solid var(--color-border-strong);
+  background: var(--bg);
+  border-bottom: var(--border-bold) solid var(--structure);
 }
 
 .drawer-panel__actions {
@@ -71,9 +70,8 @@
 .drawer-panel__button {
   padding: var(--space-sm) var(--space-md);
   background: transparent;
-  border: var(--border-hairline) solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
   font-family: var(--font-mono);
   font-size: var(--text-md);
   letter-spacing: var(--tracking-wide);
@@ -83,27 +81,26 @@
 }
 
 .drawer-panel__button:hover {
-  border-color: var(--color-text-bright);
-  color: var(--color-text-bright);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .drawer-panel__button--active {
-  background: var(--color-accent-fill);
-  border-color: var(--color-accent-fill);
-  color: var(--color-accent-fill-text);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
 }
 
 .drawer-panel__button--active:hover {
-  border-color: var(--color-accent-fill);
-  color: var(--color-accent-fill-text);
+  border-color: var(--primary);
+  color: var(--bg);
 }
 
 .drawer-panel__close {
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-accent-fill);
-  border: var(--border-hairline) solid var(--color-accent-fill);
-  border-radius: var(--radius-sm);
-  color: var(--color-accent-fill-text);
+  background: var(--primary);
+  border: var(--border-hairline) solid var(--primary);
+  color: var(--bg);
   font-family: var(--font-mono);
   font-size: var(--text-md);
   letter-spacing: var(--tracking-wide);

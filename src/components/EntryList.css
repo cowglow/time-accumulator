@@ -7,7 +7,7 @@
 .entry-list__empty {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--color-text-muted);
+  color: var(--secondary);
   text-align: center;
   padding: var(--space-2xl) 0;
 }
@@ -18,9 +18,8 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm);
-  background: var(--color-bg-raised);
-  border: var(--border-hairline) solid var(--color-border);
-  border-radius: var(--radius-sharp);
+  background: var(--bg);
+  border: var(--border-hairline) solid var(--hairline);
 }
 
 .entry-row--plain {
@@ -33,23 +32,22 @@
 
 .entry-row--omitted .entry-row__time {
   text-decoration: line-through;
-  text-decoration-color: var(--color-text-muted);
+  text-decoration-color: var(--secondary);
 }
 
 .entry-row__checkbox {
   width: 1.25rem;
   height: 1.25rem;
   padding: 0;
-  background: var(--color-bg);
-  border: var(--border-hairline) solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: var(--border-hairline) solid var(--structure);
   cursor: pointer;
   position: relative;
 }
 
 .entry-row__checkbox--checked {
-  background: var(--color-accent-fill);
-  border-color: var(--color-accent-fill);
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .entry-row__checkbox--checked::after {
@@ -60,24 +58,24 @@
   align-items: center;
   justify-content: center;
   font-size: var(--text-xs);
-  color: var(--color-accent-fill-text);
+  color: var(--bg);
 }
 
 .entry-row__time {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-variant-numeric: tabular-nums;
-  color: var(--color-text);
+  color: var(--secondary);
 }
 
 .entry-row__pool {
-  color: var(--color-text-muted);
+  color: var(--secondary);
 }
 
 .entry-row__day {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--secondary);
   margin-top: 0.125rem;
 }
 
@@ -91,7 +89,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-variant-numeric: tabular-nums;
-  color: var(--color-text-muted);
+  color: var(--secondary);
 }
 
 .entry-row__delete {
@@ -100,14 +98,13 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   background: none;
-  border: var(--border-hairline) solid var(--color-border-strong);
-  border-radius: var(--radius-sharp);
-  color: var(--color-text-muted);
+  border: var(--border-hairline) solid var(--structure);
+  color: var(--secondary);
   padding: 0.1875rem 0.4375rem;
   cursor: pointer;
 }
 
 .entry-row__delete:hover {
-  border-color: var(--color-text-bright);
-  color: var(--color-text-bright);
+  border-color: var(--primary);
+  color: var(--primary);
 }

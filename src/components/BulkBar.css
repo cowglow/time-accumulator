@@ -11,9 +11,8 @@
   justify-content: space-between;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-text-bright);
-  color: var(--color-bg);
-  border-radius: var(--radius-sharp);
+  background: var(--primary);
+  color: var(--bg);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
@@ -29,16 +28,15 @@
 
 .bulk-bar__button {
   padding: var(--space-2xs) var(--space-sm);
-  background: var(--color-bg);
-  color: var(--color-text-bright);
+  background: var(--bg);
+  color: var(--primary);
   border: none;
-  border-radius: var(--radius-sharp);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   cursor: pointer;
 }
 
 .bulk-bar__button--primary {
-  background: var(--color-accent-fill);
-  color: var(--color-accent-fill-text);
+  background: var(--primary);
+  color: var(--bg);
 }

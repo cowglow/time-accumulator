@@ -2,33 +2,28 @@
 @import 'fonts.css';
 
 /*
- * Design tokens — gray/tactical system.
- * Fully achromatic: every color token is a step on the gray scale.
+ * Design tokens.
+ *
+ * Fully monochrome. Six color roles, dark by default, with a light override
+ * driven by the OS/browser's prefers-color-scheme. A manual toggle later only
+ * needs to set these same six properties under e.g. [data-theme="light"].
+ *
+ * Accessibility rule: exactly two TEXT tones exist.
+ *   --primary    the one value that matters most in a given context (digits,
+ *                durations, active state); the highest-contrast "extreme".
+ *   --secondary  every other piece of real text.
+ * --structure and --hairline are for non-text graphics only (borders,
+ * brackets, dividers) — never apply them to text.
  */
 :root {
-  /* Gray scale — pure black to pure white, per the PlayTimeStation palette:
-     monochrome only, hierarchy comes from brightness, not hue. */
-  --c-gray-00: #000000;
-  --c-gray-10: #18181a;
-  --c-gray-20: #2a2a2d;
-  --c-gray-30: #424246;
-  --c-gray-40: #626266;
-  --c-gray-50: #87878c;
-  --c-gray-60: #ababaf;
-  --c-gray-70: #d2d2d4;
-  --c-gray-80: #ffffff;
+  color-scheme: dark;
 
-  /* Semantic surface/text roles built from the scale */
-  --color-bg: var(--c-gray-00);
-  --color-bg-raised: var(--c-gray-10);
-  --color-surface: var(--c-gray-20);
-  --color-border: var(--c-gray-30);
-  --color-border-strong: var(--c-gray-50);
-  --color-text: var(--c-gray-70);
-  --color-text-muted: var(--c-gray-50);
-  --color-text-bright: var(--c-gray-80);
-  --color-accent-fill: var(--c-gray-70);
-  --color-accent-fill-text: var(--c-gray-00);
+  --bg: #15171a; /* page background */
+  --panel: #1d2023; /* digit tile background */
+  --hairline: #33363a; /* decorative dividers only, never text */
+  --structure: #797d82; /* idle corner brackets, idle borders */
+  --primary: #f5f5f3; /* digits, durations, active/running state */
+  --secondary: #c7c9cc; /* all other text */
 
   /* Spacing scale */
   --space-2xs: 0.25rem;
@@ -40,54 +35,52 @@
   --space-2xl: 4rem;
 
   /* Typography */
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, 'SFMono-Regular',
-    Menlo, Consolas, monospace;
-  --text-xs: 0.6875rem;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'SFMono-Regular', Menlo,
+    Consolas, monospace;
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
   --text-sm: 0.8125rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;
   --text-xl: 2rem;
-  --text-display: clamp(2.5rem, 10vw, 4.5rem);
-  --tracking-wide: 0.08em;
-  --tracking-wider: 0.2em;
+  --tracking-wide: 0.12em;
+  --tracking-wider: 0.18em;
+  --tracking-widest: 0.3em;
 
-  /* Structure */
+  /* Structure — square geometry throughout, no radii */
   --border-hairline: 1px;
   --border-bold: 2px;
-  --radius-sharp: 0;
-  --radius-sm: 2px;
+  --bracket-arm: 24px;
+  --bracket-stroke: 3px;
+}
 
-  --grid-line: var(--c-gray-10);
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --bg: #eceeef;
+    --panel: #ffffff;
+    --hairline: #c9cccf;
+    --structure: #7a7e83;
+    --primary: #101214; /* near-black — the "extreme" tone here */
+    --secondary: #4b4f54;
+  }
 }
 
 html {
-  background: var(--color-bg);
+  background: var(--bg);
 }
 
 body {
-  background:
-    repeating-linear-gradient(
-      0deg,
-      var(--grid-line) 0,
-      var(--grid-line) 1px,
-      transparent 1px,
-      transparent 48px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      var(--grid-line) 0,
-      var(--grid-line) 1px,
-      transparent 1px,
-      transparent 48px
-    ),
-    var(--color-bg);
-  color: var(--color-text);
+  background: var(--bg);
+  color: var(--secondary);
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding: var(--space-lg);
@@ -95,12 +88,17 @@ body {
 
 #root a,
 #root a:visited {
-  color: var(--color-text-muted);
+  color: var(--secondary);
   text-decoration: none;
 }
 
 #root a:hover {
-  color: var(--color-text-bright);
+  color: var(--primary);
+}
+
+:focus-visible {
+  outline: var(--border-bold) solid var(--primary);
+  outline-offset: var(--space-2xs);
 }
 
 #app {
@@ -109,5 +107,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+  padding-top: calc(3.5rem + env(safe-area-inset-top, 0px));
+}
+
+/* Small uppercase telemetry label, shared by every view */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--secondary);
+  margin: var(--space-lg) 0 var(--space-xs);
 }
