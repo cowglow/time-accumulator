@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+<rect width="1280" height="640" fill="#15171a"/>
+<svg x="96" y="120" width="400" height="400" viewBox="0 0 512 512"><rect x="0" y="0" width="512" height="512" fill="#15171a"/><path d="M125 197V125H197M315 125H387V197M125 315V387H197M315 387H387V315" fill="none" stroke="#f5f5f3" stroke-width="18" stroke-linejoin="miter" stroke-linecap="butt"/><rect x="166" y="202" width="36" height="36" fill="#f5f5f3"/><rect x="166" y="274" width="36" height="36" fill="#f5f5f3"/><rect x="238" y="202" width="36" height="36" fill="#f5f5f3"/><rect x="238" y="274" width="36" height="36" fill="#f5f5f3"/><rect x="310" y="202" width="36" height="36" fill="#f5f5f3"/><rect x="310" y="274" width="36" height="36" fill="#f5f5f3"/></svg>
+<g font-family="IBM Plex Mono" fill="#f5f5f3">
+<text x="600" y="282" font-size="76" font-weight="600" letter-spacing="4">TIME</text>
+<text x="600" y="366" font-size="76" font-weight="600" letter-spacing="4">ACCUMULATOR</text>
+</g>
+<rect x="600" y="408" width="620" height="2" fill="#33363a"/>
+<g font-family="IBM Plex Mono" fill="#c7c9cc">
+<text x="600" y="462" font-size="28" font-weight="400">Toggle time on and off. Keep the log.</text>
+<text x="600" y="560" font-size="22" font-weight="400" letter-spacing="1">github.com/cowglow/time-accumulator</text>
+</g>
+</svg>

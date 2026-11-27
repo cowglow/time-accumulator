@@ -2,15 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Time Accumulator</title>
+
+    <!-- Brand pack: icons, manifest, theme colour (see docs/brand/BRAND.md).
+         Vite resolves %BASE_URL% to the configured base, /time-accumulator/. -->
+    <meta name="description" content="Toggle time on and off and keep a log of the laps." />
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="%BASE_URL%favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
     <meta name="theme-color" content="#15171a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#eceeef" media="(prefers-color-scheme: light)" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="description" content="A timer application" />
-    <link rel="apple-touch-icon" href="/logo192.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Time Accumulator</title>
+
+    <!-- Link previews (the image URL has to be absolute) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Time Accumulator" />
+    <meta property="og:description" content="Toggle time on and off and keep a log of the laps." />
+    <meta property="og:url" content="https://cowglow.github.io/time-accumulator/" />
+    <meta property="og:image" content="https://cowglow.github.io/time-accumulator/social-preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
