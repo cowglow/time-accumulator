@@ -46,7 +46,7 @@ and this project adheres to
 
 - Leftover Create React App icons and `manifest.json`.
 
-## [0.4.0] - 2026-11-28
+## 0.4.0 - 2026-11-28
 
 ### Added
 
@@ -66,7 +66,7 @@ and this project adheres to
   home, the gear toggles Pools).
 - Deleting a pool is blocked while its timer is running.
 
-## [0.3.0] - 2026-11-27
+## 0.3.0 - 2026-11-27
 
 ### Added
 
@@ -84,7 +84,7 @@ and this project adheres to
 
 - Elapsed hours no longer wrap at 24.
 
-## [0.2.0] - 2026-07-01
+## 0.2.0 - 2026-07-01
 
 ### Changed
 
@@ -98,7 +98,7 @@ and this project adheres to
 
 - GitHub Actions workflow that tests, builds and deploys to GitHub Pages.
 
-## [0.1.0] - 2021-07-18
+## 0.1.0 - 2021-07-18
 
 ### Added
 
@@ -107,8 +107,4 @@ and this project adheres to
 
 [Unreleased]: https://github.com/cowglow/time-accumulator/compare/v1.0.1...HEAD
 [1.0.1]: https://github.com/cowglow/time-accumulator/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/cowglow/time-accumulator/compare/v0.4.0...v1.0.0
-[0.4.0]: https://github.com/cowglow/time-accumulator/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/cowglow/time-accumulator/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/cowglow/time-accumulator/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/cowglow/time-accumulator/releases/tag/v0.1.0
+[1.0.0]: https://github.com/cowglow/time-accumulator/releases/tag/v1.0.0
