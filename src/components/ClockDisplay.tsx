@@ -1,33 +1,35 @@
 import React from 'react';
 import { useTimer } from '../hooks/useTimer';
+import { useAppState } from '../contexts/AppStateContext';
 import './ClockDisplay.css';
 
-interface ClockDisplayProps {}
+const pad = (unit: number) => unit.toString().padStart(2, '0');
 
-const toTileDigits = (unit: number) => unit.toString().padStart(2, '0').split('');
-
-export const ClockDisplay: React.FunctionComponent<ClockDisplayProps> = () => {
+/** Split-flap readout: every character of HH:MM:SS is its own element —
+ *  digits in bordered tiles, colons unboxed. */
+export const ClockDisplay: React.FC = () => {
   const { hour, minute, seconds } = useTimer();
-  const units = [hour, minute, seconds];
+  const { running } = useAppState();
+  const text = `${pad(hour)}:${pad(minute)}:${pad(seconds)}`;
 
   return (
-    <span className="split-flap" role="timer" aria-live="off">
-      {units.map((unit, groupIndex) => (
-        <React.Fragment key={groupIndex}>
-          {groupIndex > 0 && (
-            <span className="split-flap__colon" aria-hidden="true">
-              :
-            </span>
-          )}
-          <span className="split-flap__group">
-            {toTileDigits(unit).map((digit, digitIndex) => (
-              <span className="split-flap__tile" key={digitIndex}>
-                {digit}
-              </span>
-            ))}
+    <span
+      className={`split-flap${running ? ' split-flap--running' : ''}`}
+      role="timer"
+      aria-live="off"
+      aria-label={text}
+    >
+      {text.split('').map((ch, index) =>
+        ch === ':' ? (
+          <span className="split-flap__colon" aria-hidden="true" key={index}>
+            :
           </span>
-        </React.Fragment>
-      ))}
+        ) : (
+          <span className="split-flap__tile" aria-hidden="true" key={index}>
+            {ch}
+          </span>
+        )
+      )}
     </span>
   );
 };
