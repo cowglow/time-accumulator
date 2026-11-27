@@ -6,19 +6,19 @@ on:
     branches:
       - master
 
+# One Pages deployment at a time. Don't cancel a run that's in progress, so a
+# deployment is never cut off halfway; a newer push queues behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
-    name: Deploy Update
+    name: Build
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout 🛎
@@ -46,6 +46,23 @@ jobs:
         with:
           path: dist
 
+  # A separate job, as in GitHub's Pages starter workflow. With upload and
+  # deploy in one job, deploy-pages sometimes looked up the artifact before
+  # it was registered and failed with "Fetching artifact metadata failed".
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy 🚀
         id: deployment
         uses: actions/deploy-pages@v5

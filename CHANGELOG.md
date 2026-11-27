@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- Pages deploys no longer fail intermittently with "Fetching artifact
+  metadata failed": the deploy workflow now builds and deploys in separate
+  jobs, and runs one deployment at a time.
+
 ## [1.0.1] - 2026-11-28
 
 ### Changed
