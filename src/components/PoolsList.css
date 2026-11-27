@@ -1,5 +1,5 @@
 .pools-list {
-  width: min(92vw, 480px);
+  width: min(100%, 480px);
 }
 
 .pools-list__head {
@@ -93,4 +93,5 @@
   display: block;
   height: 100%;
   background: var(--primary);
+  transition: width var(--dur-slow) var(--ease-out);
 }

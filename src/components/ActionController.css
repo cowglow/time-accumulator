@@ -20,6 +20,14 @@
   outline-offset: var(--space-xs);
 }
 
+.dial:hover .bracket-frame:not(.bracket-frame--active) {
+  --pull: 3px;
+}
+
+.dial:active .bracket-frame {
+  --pull: 10px;
+}
+
 .dial__action {
   font-family: var(--font-mono);
   font-size: var(--text-xs);

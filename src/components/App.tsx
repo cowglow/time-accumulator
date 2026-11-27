@@ -11,9 +11,11 @@ export const App = () => {
 
   return (
     <div id="app">
-      {currentStage === StagesEnum.TimerStage && <HomeView />}
-      {currentStage === StagesEnum.PoolsStage && <PoolsView />}
-      {currentStage === StagesEnum.ActivityStage && <ActivityView />}
+      <div className="view" key={currentStage}>
+        {currentStage === StagesEnum.TimerStage && <HomeView />}
+        {currentStage === StagesEnum.PoolsStage && <PoolsView />}
+        {currentStage === StagesEnum.ActivityStage && <ActivityView />}
+      </div>
       <TimerOverlay />
       <Drawer />
     </div>

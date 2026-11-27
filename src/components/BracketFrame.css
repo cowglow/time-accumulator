@@ -5,11 +5,22 @@
   aspect-ratio: 1;
 }
 
+.bracket-frame {
+  --pull: 0px;
+}
+
+.bracket-frame--active {
+  --pull: 6px;
+}
+
 .bracket-frame__corner {
   position: absolute;
   width: var(--bracket-arm);
   height: var(--bracket-arm);
   border: 0 solid var(--structure);
+  transition:
+    transform var(--dur-slow) var(--ease-out),
+    border-color var(--dur-slow) var(--ease-out);
 }
 
 .bracket-frame--active .bracket-frame__corner {
@@ -21,6 +32,7 @@
   left: 0;
   border-top-width: var(--bracket-stroke);
   border-left-width: var(--bracket-stroke);
+  transform: translate(var(--pull), var(--pull));
 }
 
 .bracket-frame__corner--tr {
@@ -28,6 +40,7 @@
   right: 0;
   border-top-width: var(--bracket-stroke);
   border-right-width: var(--bracket-stroke);
+  transform: translate(calc(var(--pull) * -1), var(--pull));
 }
 
 .bracket-frame__corner--bl {
@@ -35,6 +48,7 @@
   left: 0;
   border-bottom-width: var(--bracket-stroke);
   border-left-width: var(--bracket-stroke);
+  transform: translate(var(--pull), calc(var(--pull) * -1));
 }
 
 .bracket-frame__corner--br {
@@ -42,6 +56,7 @@
   right: 0;
   border-bottom-width: var(--bracket-stroke);
   border-right-width: var(--bracket-stroke);
+  transform: translate(calc(var(--pull) * -1), calc(var(--pull) * -1));
 }
 
 .bracket-frame__content {

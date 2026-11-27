@@ -26,7 +26,9 @@ export const ClockDisplay: React.FC = () => {
           </span>
         ) : (
           <span className="split-flap__tile" aria-hidden="true" key={index}>
-            {ch}
+            <span className="split-flap__glyph" key={ch}>
+              {ch}
+            </span>
           </span>
         )
       )}

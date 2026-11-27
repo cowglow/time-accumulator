@@ -1,5 +1,5 @@
 .activity-view {
-  width: min(92vw, 480px);
+  width: min(100%, 480px);
   padding-bottom: var(--space-2xl);
 }
 

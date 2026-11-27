@@ -23,6 +23,15 @@
   gap: var(--space-sm);
   padding: var(--space-md) 0;
   border-bottom: var(--border-hairline) solid var(--hairline);
+  animation: row-in var(--dur-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 30ms);
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
 .entry-row--plain {

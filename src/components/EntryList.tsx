@@ -28,7 +28,7 @@ export const EntryList: React.FC<EntryListProps> = ({
 
   return (
     <div className="entry-list">
-      {entries.map(entry => {
+      {entries.map((entry, index) => {
         const start = parseInt(entry.timeIn, 10);
         const end = parseInt(entry.timeOut, 10);
         const omitted = entry.state === 'omitted';
@@ -37,6 +37,7 @@ export const EntryList: React.FC<EntryListProps> = ({
         return (
           <div
             key={entry.id}
+            style={{ '--i': Math.min(index, 12) } as React.CSSProperties}
             className={`entry-row${omitted ? ' entry-row--omitted' : ''}${
               selectable ? '' : ' entry-row--plain'
             }`}
