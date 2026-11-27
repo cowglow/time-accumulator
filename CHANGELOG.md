@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-28
+
 ### Fixed
 
 - Pages deploys no longer fail intermittently with "Fetching artifact
@@ -111,6 +113,7 @@ and this project adheres to
 - Original Create React App / React 17 version: start/stop timer with a
   `localStorage`-backed log, styled with react-bootstrap.
 
-[Unreleased]: https://github.com/cowglow/time-accumulator/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/cowglow/time-accumulator/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/cowglow/time-accumulator/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/cowglow/time-accumulator/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cowglow/time-accumulator/releases/tag/v1.0.0
